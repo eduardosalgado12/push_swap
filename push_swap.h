@@ -23,6 +23,7 @@ typedef struct s_stack
     struct s_stack  *prev;       // Ponteiro para o nó anterior acima na pilha
 }   t_stack;
 
-int	ft_lstsize(t_stack *lst);
+int	    ft_lstsize(t_stack *lst);
+void	stack_init_a(t_stack **a, char **argv);
 
 #endif
