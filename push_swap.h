@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/19 15:21:04 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/20 16:18:49 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/05/22 11:50:55 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define PUSH_SWAP_H
 
 # include <unistd.h>
+# include <stdlib.h>
+# include <limits.h>
+# include <stdio.h>
+# include <stdbool.h>
 
 typedef struct s_stack
 {
@@ -23,6 +27,23 @@ typedef struct s_stack
     struct s_stack  *prev;       // Ponteiro para o nó anterior acima na pilha
 }   t_stack;
 
-int	ft_lstsize(t_stack *lst);
+void	stack_init(t_stack **a, char **argv);
+
+int		errors_syntax(char *str);
+int		errors_duplicate(t_stack *a, int n);
+void	free_errors(t_stack	**a);
+
+char	**ft_split(char const *s, char c);
+
+void	swap_a(t_stack **sa);
+bool	stack_sorted(t_stack *sa);
+int		stack_len(t_stack *sa);
+void	swap(t_stack **stack);
+
+
+void	rotate(t_stack **stack);
+void 	reverse_rotate(t_stack **stack);
+
+void	push(t_stack **dst, t_stack **src);
 
 #endif
