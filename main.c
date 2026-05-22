@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 15:26:18 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/05/21 15:40:49 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/22 15:23:08 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ int main(int argc, char **argv)
     {
         if(stack_len(sa) == 2)
         	swap_a(&sa);
-        // if(ft_lstsize(a) == 3);
-
+    	if(ft_lstsize(a) == 3)
+			
+			
         // else if(push_swap(a));
     }
 
