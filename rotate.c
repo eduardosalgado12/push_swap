@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/22 10:36:18 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/22 11:47:19 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/22 16:21:32 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	rotate(t_stack **stack)
 	t_stack	*first;
 	t_stack	*last;
 	
-	if (!stack || !*stack || !(*stack)-next)
+	if (!stack || !*stack || !(*stack)->next)
 		return ;
 	
 	first = *stack;
@@ -34,11 +34,10 @@ void	rotate(t_stack **stack)
 
 void reverse_rotate(t_stack **stack)
 {
-
 	t_stack	*first;
 	t_stack	*last;
 	
-	if (!stack || !*stack || !(*stack)-next)
+	if (!stack || !*stack || !(*stack)->next)
 		return ;
 	
 	first = *stack;
@@ -52,4 +51,18 @@ void reverse_rotate(t_stack **stack)
 	first->prev = last;
 	*stack = last;
 	last->prev = NULL;
+}
+
+void ra(t_stack **a, int print)
+{
+	rotate(a);
+	if (print == 1)
+		write(1, "ra\n", 3);
+}
+
+void rra(t_stack **a, int print)
+{
+	reverse_rotate(a);
+	if (print == 1)
+		write(1, "rra\n", 3);
 }

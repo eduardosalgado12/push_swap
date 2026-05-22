@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 15:26:18 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/05/22 15:59:06 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/22 16:59:31 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int main(int argc, char **argv)
 {
     t_stack *a;
     t_stack *b;
+	double	disorder;
     
     a = NULL;
     b = NULL;
@@ -25,14 +26,14 @@ int main(int argc, char **argv)
         argv = ft_split(argv[1], ' ');
     
     stack_init(&a, argv);
+	disorder = disorder_metric(a);
     if(!stack_sorted(a))
     {
-        if(stack_len(a) == 2)
-        	swap_a(&a);
-    	if(ft_lstsize(a) == 3)
+        if(ft_lstsize(a) == 2)
+        	sa(&a, 1);
+    	else if(ft_lstsize(a) == 3)
 			sort_three(&a);
-			
-        // else if(push_swap(a));
+		// else if(push_swap(a));
     }
 
 
