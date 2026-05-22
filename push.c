@@ -12,34 +12,23 @@
 
 #include "push_swap.h"
 
-void	push(t_stack **dst, t_stack **src) // push a top node from one stack to another
+void	push(t_stack **dst, t_stack **src)
 {
-	t_stack	*temp;
+	t_stack	*to_push;
 	
-	// If the source stack is empty, there is nothing to push.
-	if (!*src)
+	if (!src || !*src)
 		return ;
 
-	temp = *src;
+	to_push = *src;
 
-	// Disconnect the node and move the source head pointer to the next node, this becomes the next top .
 	*src = (*src)->next;
-	
-	// Check if current node exists	
+		
 	if (*src)
-		(*src)->prev = NULL; // set current node as head of stack
+		(*src)->prev = NULL;
 
-	// Detach node to push from stack
-	temp->prev = NULL; 
-	if (!*dst) // check if empty
-	{
-		*dst = temp; // if empy, assign as first node of stack
-		temp->next = NULL; // also ensure it is last node
-	}
-	else
-	{
-		temp->next = *dst; // aasign node to push to top of current top node of stack
-		temp->next->prev = temp; // aasign to seconde node's prev attribute
-		*dst = temp; // complete appending the node. the pointer to top node is nowe pointing to the recenly pushed node.
-	}
+	to_push->prev = NULL;
+	to_push->next = *dst;
+	if (*dst) 
+		(*dst)->prev = to_push;
+	*dst = to_push;
 }
