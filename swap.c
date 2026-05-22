@@ -6,34 +6,34 @@
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 14:46:26 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/22 10:21:54 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/22 16:01:08 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	stack_len(t_stack *sa)
+int	stack_len(t_stack *a)
 {
 	int	count;
 
 	count = 0;
-	while (sa)
+	while (a)
 	{
 		count++;
-		sa = sa->next;
+		a = a->next;
 	}
 	return (count);
 }
 
-bool	stack_sorted(t_stack *sa)
+bool	stack_sorted(t_stack *a)
 {
-	if (!sa)
+	if (!a)
 		return (true);
-	while (sa->next)
+	while (a->next)
 	{
-		if (sa->value > sa->next->value)
+		if (a->value > a->next->value)
 			return (false);
-		sa = sa->next;
+		a = a->next;
 	}
 	return (true);
 }
@@ -60,9 +60,9 @@ void	swap(t_stack **stack)
 	*stack = second;
 }
 
-void	swap_a(t_stack **sa)
+void	swap_a(t_stack **a)
 {
-	swap(sa);
+	swap(a);
 	write(1, "sa\n", 3);
 }
 

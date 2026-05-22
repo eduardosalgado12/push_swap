@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/19 15:21:04 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/22 15:54:15 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/22 16:01:41 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void	free_errors(t_stack	**a);
 char	**ft_split(char const *s, char c);
 
 //commands
-void	swap_a(t_stack **sa);
-bool	stack_sorted(t_stack *sa);
-int		stack_len(t_stack *sa);
+void	swap_a(t_stack **a);
+bool	stack_sorted(t_stack *a);
+int		stack_len(t_stack *a);
 void	swap(t_stack **stack);
 void	rotate(t_stack **stack);
 void 	reverse_rotate(t_stack **stack);
@@ -51,6 +51,6 @@ void	push(t_stack **dst, t_stack **src);
 int		ft_lstsize(t_stack *lst);
 
 // algorithms
-void	sort_three(t_stack **stack_a);
+void	sort_three(t_stack **a);
 
 #endif

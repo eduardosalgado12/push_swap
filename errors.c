@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 17:35:38 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/21 13:04:43 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/22 15:59:39 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ int	errors_syntax(char *str)
 	return (0);
 }
 
-int	errors_duplicate(t_stack *sa, int n)
+int	errors_duplicate(t_stack *a, int n)
 {
-	if (!sa)
+	if (!a)
 		return (0);
-	while (sa)
+	while (a)
 	{
-		if (sa->value == n)
+		if (a->value == n)
 			return (1);
-		sa = sa->next;
+		a = a->next;
 	}
 	return (0);
 }
@@ -57,9 +57,9 @@ void	free_stack(t_stack **stack)
 	*stack = NULL;
 }
 
-void	free_errors(t_stack	**sa)
+void	free_errors(t_stack	**a)
 {
-	free_stack(sa);
+	free_stack(a);
 	printf("Error\n");
 	exit(1);
 }

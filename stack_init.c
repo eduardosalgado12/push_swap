@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 17:20:28 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/21 15:39:48 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/22 16:00:16 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void append_node(t_stack **stack, int n)
 	
 }
 
-void	stack_init(t_stack **sa, char **argv)
+void	stack_init(t_stack **a, char **argv)
 {
 	long	n;
 	int		i;
@@ -79,13 +79,13 @@ void	stack_init(t_stack **sa, char **argv)
 	while (argv[i])
 	{
 		if (errors_syntax(argv[i]))
-			free_errors(sa);
+			free_errors(a);
 		n = ft_atol(argv[i]);
 		if (n > INT_MAX || n < INT_MIN)
-			free_errors(sa);
-		if (errors_duplicate(*sa, (int)n))
-			free_errors(sa);
-		append_node(sa, (int)n);
+			free_errors(a);
+		if (errors_duplicate(*a, (int)n))
+			free_errors(a);
+		append_node(a, (int)n);
 		i++;
 	}
 }
