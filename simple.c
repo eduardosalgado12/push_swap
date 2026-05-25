@@ -1,46 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   simple.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/21 15:52:46 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/25 13:25:34 by khooftma         ###   ########.fr       */
+/*   Created: 2026/05/25 09:31:16 by khooftma          #+#    #+#             */
+/*   Updated: 2026/05/25 15:08:41 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	push(t_stack **dst, t_stack **src)
+int	find_min_value(t_stack *stack)
 {
-	t_stack	*to_push;
+	int	min;
 	
-	if (!src || !*src)
-		return ;
-
-	to_push = *src;
-
-	*src = (*src)->next;
-		
-	if (*src)
-		(*src)->prev = NULL;
-
-	to_push->prev = NULL;
-	to_push->next = *dst;
-	if (*dst) 
-		(*dst)->prev = to_push;
-	*dst = to_push;
+	min = stack->value;
+	while (stack)
+	{
+		if (stack->value < min)
+			min = stack->value;
+		stack = stack->next;
+	}
+	return (min);
 }
 
-void	pa(t_stack **a, t_stack **b)
-{
-	push(a, b);
-	write (1, "pa\n", 3);
-}
 
-void	pb(t_stack **a, t_stack **b)
+void	selection_sort(t_stack **a, t_stack **b)
 {
-	push(b, a);
-	write (1, "pb\n", 3);
+	int	i;
+	int min;
+
+	i = 0;
+	while (*a)
+	{
+		min = find_min_value(*a);
+		while ((*a)->value != min)
+			ra(a);
+		pb(a, b);
+		i++;
+	}
+	while (i > 0)
+	{
+		pa(a, b);
+		i--;
+	}	
 }

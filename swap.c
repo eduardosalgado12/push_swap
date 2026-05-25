@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 14:46:26 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/22 16:17:29 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/25 12:11:44 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,21 @@ void	swap(t_stack **stack)
 	*stack = second;
 }
 
-void	sa(t_stack **a, int print)
+void	sa(t_stack **a)
 {
 	swap(a);
-	if (print == 1)
-		write(1, "sa\n", 3);
+	write(1, "sa\n", 3);
+}
+
+void	sb(t_stack **b)
+{
+	swap(b);
+	write(1, "sa\n", 3);
+}
+
+void	ss(t_stack **a, t_stack **b)
+{
+	swap(a);
+	swap(b);
+	write(1, "ss\n", 3);
 }

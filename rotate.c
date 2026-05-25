@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/22 10:36:18 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/22 16:21:32 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/25 14:42:30 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	rotate(t_stack **stack)
 	*stack = first->next;
 	(*stack)->prev = NULL;
 	last->next = first;
-	first->next = NULL;
 	first->prev = last;
+	first->next = NULL;
 }
 
 void reverse_rotate(t_stack **stack)
@@ -53,16 +53,40 @@ void reverse_rotate(t_stack **stack)
 	last->prev = NULL;
 }
 
-void ra(t_stack **a, int print)
+void ra(t_stack **a)
 {
 	rotate(a);
-	if (print == 1)
 		write(1, "ra\n", 3);
 }
 
-void rra(t_stack **a, int print)
+void rra(t_stack **a)
 {
 	reverse_rotate(a);
-	if (print == 1)
-		write(1, "rra\n", 3);
+		write(1, "rra\n", 4);
+}
+
+void rb(t_stack **b)
+{
+	rotate(b);
+		write(1, "rb\n", 3);
+}
+
+void rrb(t_stack **b)
+{
+	reverse_rotate(b);
+		write(1, "rrb\n", 4);
+}
+
+void rr(t_stack **a, t_stack **b)
+{
+	rotate(a);
+	rotate(b);
+		write(1, "rr\n", 3);
+}
+
+void rrr(t_stack **a, t_stack **b)
+{
+	reverse_rotate(a);
+	reverse_rotate(b);
+		write(1, "rrr\n", 4);
 }

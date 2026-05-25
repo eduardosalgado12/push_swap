@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/22 15:45:10 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/22 16:28:01 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/25 12:18:44 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,19 @@ void sort_three(t_stack **a)
 	third = (*a)->next->next->value;
 
 	if (first > second && second < third && first < third)
-		sa(a, 1);
+		sa(a);
 	else if (first > second && second > third && first > third)
 	{
-		sa(a, 1);
-		rra(a, 1);
+		sa(a);
+		rra(a);
 	}
 	else if (first > second && second < third && first > third)
-		ra(a, 1);
+		ra(a);
 	else if (first < second && second > third && first < third)
 	{
-		sa(a, 1);
-		ra(a, 1);
+		sa(a);
+		ra(a);
 	}	
 	else if (first < second && second > third && first > third)
-		rra(a, 1);
+		rra(a);
 }
