@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/19 15:21:04 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/25 12:16:29 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/25 16:17:22 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@
 
 typedef struct s_stack
 {
-    int             value;       // O número original recebido por parâmetro
-    int             index;       // A posição dele se estivesse ordenado (0 a N-1)
-    struct s_stack  *next;       // Ponteiro para o próximo nó abaixo na pilha
-    struct s_stack  *prev;       // Ponteiro para o nó anterior acima na pilha
+    int             value;
+    struct s_stack  *next;
+	struct s_stack  *prev;
 }   t_stack;
 
 //stack_init
@@ -56,7 +55,6 @@ void	pb(t_stack **a, t_stack **b);
 // utils
 int		ft_lstsize(t_stack *lst);
 bool	stack_sorted(t_stack *a);
-int		stack_len(t_stack *a);
 
 //disorder
 double disorder_metric(t_stack *a);
@@ -64,14 +62,7 @@ double disorder_metric(t_stack *a);
 // algorithms
 void	sort_three(t_stack **a);
 
-void	algo_simple(t_stack **a, t_stack **b);
-void	algo_medium(t_stack **a, t_stack **b);
-void	algo_complex(t_stack **a, t_stack **b);
-void	algo_adaptive(t_stack **a, t_stack **b);
-
 // simple
-
-int	find_min_value(t_stack *stack);
-void	selection_sort(t_stack **a, t_stack **b);
+void	selection_sort(t_stack **stack_a, t_stack **stack_b);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/22 10:36:18 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/25 14:42:30 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/25 16:20:16 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ void	rotate(t_stack **stack)
 	while (last->next)
 		last = last->next;
 	*stack = first->next;
-	(*stack)->prev = NULL;
 	last->next = first;
-	first->prev = last;
 	first->next = NULL;
 }
 
@@ -36,21 +34,27 @@ void reverse_rotate(t_stack **stack)
 {
 	t_stack	*first;
 	t_stack	*last;
+	t_stack	*before_last;
 	
 	if (!stack || !*stack || !(*stack)->next)
 		return ;
-	
 	first = *stack;
 	last = *stack;
+	before_last = NULL;
 	
+	// Traverse to the very last element, keeping track of the second-to-last
 	while (last->next)
+	{
+		before_last = last;
 		last = last->next;
-		
-	last->prev->next = NULL;
+	}
+	
+	// Break the circle: the second-to-last element becomes the new end
+	before_last->next = NULL;
+	// The old last element now points to the old first element
 	last->next = first;
-	first->prev = last;
+	// The top of the stack becomes the old last element
 	*stack = last;
-	last->prev = NULL;
 }
 
 void ra(t_stack **a)

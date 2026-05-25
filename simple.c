@@ -6,24 +6,11 @@
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 09:31:16 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/25 15:30:06 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/25 16:10:48 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int	get_stack_size(t_stack *stack)
-{
-	int	count;
-
-	count = 0;
-	while (stack != NULL)
-	{
-		count++;
-		stack = stack->next;
-	}
-	return (count);
-}
 
 int	get_min_pos(t_stack *stack)
 {
@@ -49,16 +36,15 @@ int	get_min_pos(t_stack *stack)
 	return (min_pos);
 }
 
-void	simple(t_stack **stack_a, t_stack **stack_b)
+void	selection_sort(t_stack **stack_a, t_stack **stack_b)
 {
 	int	pos;
 	int	size;
 
-
 	while (*stack_a)
 	{
 		pos = get_min_pos(*stack_a);
-		size = get_stack_size(*stack_a);
+		size = ft_lstsize(*stack_a);
 		if (pos <= size / 2)
 			while (pos-- > 0)
 				ra(stack_a);
@@ -70,4 +56,5 @@ void	simple(t_stack **stack_a, t_stack **stack_b)
 	}
 	while (*stack_b)
 		pa(stack_a, stack_b);
+
 }

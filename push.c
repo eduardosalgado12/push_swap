@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 15:52:46 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/25 13:25:34 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/25 16:03:19 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,7 @@ void	push(t_stack **dst, t_stack **src)
 	to_push = *src;
 
 	*src = (*src)->next;
-		
-	if (*src)
-		(*src)->prev = NULL;
-
-	to_push->prev = NULL;
 	to_push->next = *dst;
-	if (*dst) 
-		(*dst)->prev = to_push;
 	*dst = to_push;
 }
 

@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 17:20:28 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/22 16:00:16 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/25 15:41:24 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,12 @@ void append_node(t_stack **stack, int n)
 	new_node->value = n;
 	new_node->next = NULL;
 	if (!(*stack))
-	{
 		*stack = new_node; 
-		new_node->prev = NULL;
-	}
 	else 
 	{
 		last_node = find_last(*stack);
 		last_node->next = new_node; 
-		new_node->prev = last_node;
 	}
-	
 }
 
 void	stack_init(t_stack **a, char **argv)
