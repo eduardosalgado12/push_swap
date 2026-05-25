@@ -1,53 +1,96 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rotate.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/22 10:36:18 by khooftma          #+#    #+#             */
+/*   Updated: 2026/05/25 16:20:16 by khooftma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-void rotate(t_stack **stack)
+void	rotate(t_stack **stack)
 {
 	t_stack	*first;
-    t_stack	*last;
-
-    if (!stack || !*stack || !(*stack)->next)
-		return;
-
-
-    first = *stack;
-    first = 0x100;
-    first->next = 0x200;
-    
-    last = *stack;
-    while(last->next)
-        last = last->next;
-      
-    *stack = first->next; //o primeiro da fila passa a ser o segundo
-    *stack = 0x200;
-    (*stack)->prev = NULL; // como ja atualizamos o topo da lista, temos de alterar o prev dela para NULL
-
-    last->next = first; // o ultimo agarra o antigo primeiro, passando a ser o ultimo
-
-    
-    first->next = NULL; // o primeiro agora passa a ser o ultimo
-    first->prev = last; // o prev do primeiro passa a ser o antigo ultimo
-
+	t_stack	*last;
+	
+	if (!stack || !*stack || !(*stack)->next)
+		return ;
+	
+	first = *stack;
+	last = *stack;
+	
+	while (last->next)
+		last = last->next;
+	*stack = first->next;
+	last->next = first;
+	first->next = NULL;
 }
 
 void reverse_rotate(t_stack **stack)
 {
 	t_stack	*first;
-    t_stack	*last;
+	t_stack	*last;
+	t_stack	*before_last;
+	
+	if (!stack || !*stack || !(*stack)->next)
+		return ;
+	first = *stack;
+	last = *stack;
+	before_last = NULL;
+	
+	// Traverse to the very last element, keeping track of the second-to-last
+	while (last->next)
+	{
+		before_last = last;
+		last = last->next;
+	}
+	
+	// Break the circle: the second-to-last element becomes the new end
+	before_last->next = NULL;
+	// The old last element now points to the old first element
+	last->next = first;
+	// The top of the stack becomes the old last element
+	*stack = last;
+}
 
-    if (!stack || !*stack || !(*stack)->next)
-		return;
-    first = *stack;
-    last = *stack;
+void ra(t_stack **a)
+{
+	rotate(a);
+		write(1, "ra\n", 3);
+}
 
-    while(last->next)
-        last = last->next;
-      
-    last->prev->next = NULL; // Desconecta o último elemento do penúltimo
-    
-    last->next = first; // Configura o último como o novo topo
-    last->prev = NULL;
+void rra(t_stack **a)
+{
+	reverse_rotate(a);
+		write(1, "rra\n", 4);
+}
 
-    first->prev = last; //Atualiza o antigo topo para apontar para o novo topo
+void rb(t_stack **b)
+{
+	rotate(b);
+		write(1, "rb\n", 3);
+}
 
-    *stack = last;
+void rrb(t_stack **b)
+{
+	reverse_rotate(b);
+		write(1, "rrb\n", 4);
+}
+
+void rr(t_stack **a, t_stack **b)
+{
+	rotate(a);
+	rotate(b);
+		write(1, "rr\n", 3);
+}
+
+void rrr(t_stack **a, t_stack **b)
+{
+	reverse_rotate(a);
+	reverse_rotate(b);
+		write(1, "rrr\n", 4);
 }

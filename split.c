@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/20 16:56:08 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/05/21 12:05:17 by edsalgad         ###   ########.fr       */
+/*   Created: 2026/05/21 11:57:19 by khooftma          #+#    #+#             */
+/*   Updated: 2026/05/21 12:41:10 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	**ft_split(char const *s, char c)
 	if (!res)
 		return (NULL);
 	i = 0;
-	j = 0;
+	j = 1;
 	while (s[i])
 	{
 		while (s[i] && s[i] == c)
