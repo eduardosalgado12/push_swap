@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 09:31:16 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/25 16:10:48 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/26 12:05:11 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,8 @@ void	selection_sort(t_stack **stack_a, t_stack **stack_b)
 		else
 			while (pos++ < size)
 				rra(stack_a);
-				
 		pb(stack_a, stack_b);
 	}
 	while (*stack_b)
 		pa(stack_a, stack_b);
-
 }

@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/19 15:21:04 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/25 16:17:22 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/26 14:35:19 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@
 
 typedef struct s_stack
 {
-    int             value;
-    struct s_stack  *next;
-	struct s_stack  *prev;
-}   t_stack;
+	int				value;
+	int				index;
+	struct s_stack	*next;
+	struct s_stack	*prev;
+}	t_stack;
 
 //stack_init
 void	stack_init(t_stack **a, char **argv);
@@ -64,5 +65,8 @@ void	sort_three(t_stack **a);
 
 // simple
 void	selection_sort(t_stack **stack_a, t_stack **stack_b);
+
+// medium
+void	chunk_sort(t_stack **stack_a, t_stack **stack_b);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 15:26:18 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/05/25 16:13:59 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/26 12:30:27 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int main(int argc, char **argv)
     	else if(ft_lstsize(a) == 3)
 			sort_three(&a);
 		else
-			selection_sort(&a, &b);
+			chunk_sort(&a, &b);
+			//selection_sort(&a, &b);
     }
 
 	
