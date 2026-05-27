@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 09:31:16 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/26 12:05:11 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/27 15:24:14 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	selection_sort(t_stack **stack_a, t_stack **stack_b)
 	int	pos;
 	int	size;
 
-	while (*stack_a)
+	while (ft_lstsize(*stack_a) > 3)
 	{
 		pos = get_min_pos(*stack_a);
 		size = ft_lstsize(*stack_a);
@@ -53,6 +53,7 @@ void	selection_sort(t_stack **stack_a, t_stack **stack_b)
 				rra(stack_a);
 		pb(stack_a, stack_b);
 	}
+	sort_three(stack_a);
 	while (*stack_b)
 		pa(stack_a, stack_b);
 }

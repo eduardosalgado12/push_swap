@@ -1,8 +1,8 @@
-NAME = push_swap
+NAME = push_swap.a
 
 SRC 		= push.c rotate.c simple.c sort_three.c \
 			  split.c stack_init.c swap.c utils.c errors.c \
-			  disorder.c main.c
+			  disorder.c main.c medium.c
 
 all: $(NAME)
 

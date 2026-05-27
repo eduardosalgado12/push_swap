@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 17:20:28 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/25 15:41:24 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/27 16:10:19 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 long	ft_atol(const char *nptr)
 {
-	int	sign;
+	int		sign;
 	long	res;
 
 	sign = 1;
@@ -35,7 +35,7 @@ long	ft_atol(const char *nptr)
 	return (res * sign);
 }
 
-t_stack	*find_last(t_stack *stack) 
+t_stack	*find_last(t_stack *stack)
 {
 	if (!stack)
 		return (NULL);
@@ -44,24 +44,24 @@ t_stack	*find_last(t_stack *stack)
 	return (stack);
 }
 
-void append_node(t_stack **stack, int n)
+void	append_node(t_stack **stack, int n)
 {
-	t_stack *new_node;
+	t_stack	*new_node;
 	t_stack	*last_node;
 
 	if (!stack)
 		return ;
 	new_node = malloc(sizeof(t_stack));
 	if (!new_node)
-		return;
+		return ;
 	new_node->value = n;
 	new_node->next = NULL;
 	if (!(*stack))
-		*stack = new_node; 
-	else 
+		*stack = new_node;
+	else
 	{
 		last_node = find_last(*stack);
-		last_node->next = new_node; 
+		last_node->next = new_node;
 	}
 }
 

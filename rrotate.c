@@ -1,48 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate.c                                           :+:      :+:    :+:   */
+/*   rrotate.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/22 10:36:18 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/27 16:20:57 by khooftma         ###   ########.fr       */
+/*   Created: 2026/05/27 16:19:57 by khooftma          #+#    #+#             */
+/*   Updated: 2026/05/27 16:20:41 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	rotate(t_stack **stack)
+void	reverse_rotate(t_stack **stack)
 {
 	t_stack	*first;
 	t_stack	*last;
+	t_stack	*before_last;
 
 	if (!stack || !*stack || !(*stack)->next)
 		return ;
 	first = *stack;
 	last = *stack;
+	before_last = NULL;
 	while (last->next)
+	{
+		before_last = last;
 		last = last->next;
-	*stack = first->next;
+	}
+	before_last->next = NULL;
 	last->next = first;
-	first->next = NULL;
+	*stack = last;
 }
 
-void	ra(t_stack **a)
+void	rra(t_stack **a)
 {
-	rotate(a);
-	write(1, "ra\n", 3);
+	reverse_rotate(a);
+	write(1, "rra\n", 4);
 }
 
-void	rb(t_stack **b)
+void	rrb(t_stack **b)
 {
-	rotate(b);
-	write(1, "rb\n", 3);
+	reverse_rotate(b);
+	write(1, "rrb\n", 4);
 }
 
-void	rr(t_stack **a, t_stack **b)
+void	rrr(t_stack **a, t_stack **b)
 {
-	rotate(a);
-	rotate(b);
-	write(1, "rr\n", 3);
+	reverse_rotate(a);
+	reverse_rotate(b);
+	write(1, "rrr\n", 4);
 }

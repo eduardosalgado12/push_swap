@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 16:05:35 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/05/25 15:43:53 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/27 16:41:00 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-
 int	ft_lstsize(t_stack *lst)
 {
 	int	c;
-  
+
 	c = 0;
 	while (lst)
 	{
@@ -37,4 +36,15 @@ bool	stack_sorted(t_stack *a)
 		a = a->next;
 	}
 	return (true);
+}
+
+int	ft_sqrt(int number)
+{
+	int	i;
+
+	i = 1;
+	while (i * i <= number)
+		i++;
+	return (i - 1);
+
 }
