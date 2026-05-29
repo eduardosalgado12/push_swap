@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 17:20:28 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/27 16:10:19 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/29 14:45:44 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,12 @@ void	append_node(t_stack **stack, int n)
 	}
 }
 
-void	stack_init(t_stack **a, char **argv)
+void	stack_init(t_stack **a, char **argv, int start_index)
 {
 	long	n;
 	int		i;
 
-	i = 1;
+	i = start_index; // Gebruik de flexibele start_index in plaats van 1
 	while (argv[i])
 	{
 		if (errors_syntax(argv[i]))
@@ -84,3 +84,4 @@ void	stack_init(t_stack **a, char **argv)
 		i++;
 	}
 }
+

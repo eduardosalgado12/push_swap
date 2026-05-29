@@ -6,31 +6,31 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:08:10 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/27 16:42:01 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/28 14:05:30 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	assign_indices(t_stack *stack)
-{
-	t_stack	*compare;
-	t_stack	*start;
+// void	assign_indices(t_stack *stack)
+// {
+// 	t_stack	*compare;
+// 	t_stack	*start;
 
-	start = stack;
-	while (stack)
-	{
-		stack->index = 0;
-		compare = start;
-		while (compare)
-		{
-			if (compare->value < stack->value)
-				stack->index++;
-			compare = compare->next;
-		}
-		stack = stack->next;
-	}
-}
+// 	start = stack;
+// 	while (stack)
+// 	{
+// 		stack->index = 0;
+// 		compare = start;
+// 		while (compare)
+// 		{
+// 			if (compare->value < stack->value)
+// 				stack->index++;
+// 			compare = compare->next;
+// 		}
+// 		stack = stack->next;
+// 	}
+// }
 
 static int	get_max_pos(t_stack *stack)
 {
