@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 15:26:18 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/05/29 14:46:42 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/29 16:03:34 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	main(int argc, char **argv)
 	args_start = 1;
 	if (argc < 2 || (argc == 2 && !argv[1][0]))
 		return (1);
-	
 	// Controleer of het eerste argument een vlag is
 	if (get_strategy(argv[1], &strat))
 	{
@@ -48,19 +47,19 @@ int	main(int argc, char **argv)
 		if (argc == 2 || (argc == 3 && !argv[2][0]))
 			return (1);
 	}
-
 	// Splitsen als er maar 1 argument-string met getallen overblijft
 	if ((args_start == 1 && argc == 2) || (args_start == 2 && argc == 3))
 	{
 		argv = ft_split(argv[args_start], ' ');
-		stack_init(&a, argv, 0); // ft_split resultaat begint altijd bij index 0!
-		// Vergeet hier eventueel je free_matrix(argv) niet als je die hebt
+		stack_init(&a, argv, 0);
+			// ft_split resultaat begint altijd bij index 0!
+									// Vergeet hier eventueel je free_matrix(argv) niet als je die hebt
 	}
 	else
 	{
-		stack_init(&a, argv, args_start); // Normale argumenten beginnen bij index 1 of 2
+		stack_init(&a, argv, args_start);
+			// Normale argumenten beginnen bij index 1 of 2
 	}
-
 	if (!stack_sorted(a))
 	{
 		if (ft_lstsize(a) == 2)
@@ -80,5 +79,7 @@ int	main(int argc, char **argv)
 				adaptive_sort(&a, &b);
 		}
 	}
+	flush_op();
+	free_stack(&a);
 	return (0);
 }

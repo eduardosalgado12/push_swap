@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/19 15:21:04 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/29 15:09:45 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/29 16:05:45 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	stack_init(t_stack **a, char **argv, int start_index);
 int					errors_syntax(char *str);
 int					errors_duplicate(t_stack *a, int n);
 void				free_errors(t_stack **a);
+void	free_stack(t_stack **stack);
 
 // split
 char				**ft_split(char const *s, char c);
@@ -90,5 +91,8 @@ void				merge_sort(t_stack **a, t_stack **b, int size);
 // adaptive
 void				adaptive_sort(t_stack **a, t_stack **b);
 
+//optimizer
+void	write_op(char *op);
+void	flush_op(void);
 
 #endif

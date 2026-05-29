@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 14:46:26 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/27 16:10:25 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/29 15:27:49 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,18 @@ void	swap(t_stack **stack)
 void	sa(t_stack **a)
 {
 	swap(a);
-	write(1, "sa\n", 3);
+	write_op("sa");
 }
 
 void	sb(t_stack **b)
 {
 	swap(b);
-	write(1, "sa\n", 3);
+	write_op("sb");
 }
 
 void	ss(t_stack **a, t_stack **b)
 {
 	swap(a);
 	swap(b);
-	write(1, "ss\n", 3);
+	write_op("ss");
 }

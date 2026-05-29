@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 15:52:46 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/27 16:09:39 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/05/29 15:23:14 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ void	push(t_stack **dst, t_stack **src)
 void	pa(t_stack **a, t_stack **b)
 {
 	push(a, b);
-	write(1, "pa\n", 3);
+	write_op("pa");
 }
 
 void	pb(t_stack **a, t_stack **b)
 {
 	push(b, a);
-	write(1, "pb\n", 3);
+	write_op("pb");
 }
