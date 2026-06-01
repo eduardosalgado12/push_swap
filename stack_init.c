@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_init.c                                       :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 17:20:28 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/25 15:41:24 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/01 14:20:14 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-long	ft_atol(const char *nptr)
+static long	ft_atol(const char *nptr)
 {
-	int	sign;
+	int		sign;
 	long	res;
 
 	sign = 1;
@@ -35,7 +35,7 @@ long	ft_atol(const char *nptr)
 	return (res * sign);
 }
 
-t_stack	*find_last(t_stack *stack) 
+t_stack	*find_last(t_stack *stack)
 {
 	if (!stack)
 		return (NULL);
@@ -44,33 +44,33 @@ t_stack	*find_last(t_stack *stack)
 	return (stack);
 }
 
-void append_node(t_stack **stack, int n)
+static void	append_node(t_stack **stack, int n)
 {
-	t_stack *new_node;
+	t_stack	*new_node;
 	t_stack	*last_node;
 
 	if (!stack)
 		return ;
 	new_node = malloc(sizeof(t_stack));
 	if (!new_node)
-		return;
+		return ;
 	new_node->value = n;
 	new_node->next = NULL;
 	if (!(*stack))
-		*stack = new_node; 
-	else 
+		*stack = new_node;
+	else
 	{
 		last_node = find_last(*stack);
-		last_node->next = new_node; 
+		last_node->next = new_node;
 	}
 }
 
-void	stack_init(t_stack **a, char **argv)
+static stack_fill(t_stack **a, char **argv, int start_index)
 {
 	long	n;
 	int		i;
 
-	i = 1;
+	i = start_index;
 	while (argv[i])
 	{
 		if (errors_syntax(argv[i]))
@@ -83,4 +83,33 @@ void	stack_init(t_stack **a, char **argv)
 		append_node(a, (int)n);
 		i++;
 	}
+}
+
+int stack_init(int argc, char **argv, t_stack **a, int *strat)
+{
+    int     args_start;
+    char    **split_argv;
+
+    *strat = STRAT_ADAPTIVE;
+    args_start = 1;
+    if (argc < 2 || (argc == 2 && !argv))
+        return (0);
+    
+    if (get_strategy(argv, strat))
+    {
+        args_start = 2;
+        if (argc == 2 || (argc == 3 && !argv))
+            return (0);
+    }
+    if ((args_start == 1 && argc == 2) || (args_start == 2 && argc == 3))
+    {
+        split_argv = ft_split(argv[args_start], ' ');
+        if (!split_argv)
+            return (0);
+        stack_fill(a, split_argv, 0);
+        free_matrix(split_argv);
+    }
+    else
+        stack_fill(a, argv, args_start);
+    return (1);
 }

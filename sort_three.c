@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   sort_three.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/22 15:45:10 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/25 12:18:44 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/01 14:27:45 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void sort_three(t_stack **a)
+void	sort_three(t_stack **a)
 {
-	int first;
-	int second;
-	int third;
+	int	first;
+	int	second;
+	int	third;
 
 	if (!a || !*a || !(*a)->next || !(*a)->next->next)
 		return ;
-	
+	if (ft_lstsize(a) == 2)
+		sa(&a);
 	first = (*a)->value;
 	second = (*a)->next->value;
 	third = (*a)->next->next->value;
-
 	if (first > second && second < third && first < third)
 		sa(a);
 	else if (first > second && second > third && first > third)
@@ -38,7 +38,7 @@ void sort_three(t_stack **a)
 	{
 		sa(a);
 		ra(a);
-	}	
+	}
 	else if (first < second && second > third && first > third)
 		rra(a);
 }

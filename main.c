@@ -3,46 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 15:26:18 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/05/25 16:13:59 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/01 14:25:21 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int main(int argc, char **argv)
+static int	get_strategy(char *arg, t_strategy *strat)
 {
-    t_stack *a;
-    t_stack *b;
-	double	disorder;
-    
-    a = NULL;
-    b = NULL;
-    if( argc < 2 || (argc == 2 && !argv[1][0]))
-        return(1);
-    else if(argc == 2)
-        argv = ft_split(argv[1], ' ');
-    
-    stack_init(&a, argv);
-	disorder = disorder_metric(a);
-    if(!stack_sorted(a))
-    {
-        if(ft_lstsize(a) == 2)
-        	sa(&a);
-    	else if(ft_lstsize(a) == 3)
-			sort_three(&a);
-		else
-			selection_sort(&a, &b);
-    }
+	if (ft_strcmp(arg, "--simple") == 0)
+		return (*strat = STRAT_SIMPLE, 1);
+	if (ft_strcmp(arg, "--medium") == 0)
+		return (*strat = STRAT_MEDIUM, 1);
+	if (ft_strcmp(arg, "--complex") == 0)
+		return (*strat = STRAT_COMPLEX, 1);
+	if (ft_strcmp(arg, "--adaptive") == 0)
+		return (*strat = STRAT_ADAPTIVE, 1);
+	return (0);
+}
 
-	
-	while(a)
+int	main(int argc, char **argv)
+{
+	t_stack		*a;
+	t_stack		*b;
+	int     strat;
+
+	a = NULL;
+	b = NULL;
+  	if (!stack_init(argc, argv, &a, &strat) || !a)
+    {
+        write(2, "Error\n", 6);
+        return (1);
+    }
+	if (!stack_sorted(a))
 	{
-		printf("%d ," ,a->value);
-		a = a->next;	
+		if (ft_lstsize(a) == 2 || ft_lstsize(a) == 3)
+			sort_three(&a);
+    	assign_indices(a);
+    	if (strat == STRAT_SIMPLE)
+        	selection_sort(&a, &b);
+    	else if (strat == STRAT_MEDIUM)
+        	chunk_sort(&a, &b);
+    	else if (strat == STRAT_COMPLEX)
+        	quick_sort_a(&a, &b, ft_lstsize(a));
+    	else
+        	adaptive_sort(&a, &b);
 	}
-	printf("Disorder: '%f", disorder);
-		
+	flush_op();
+	free_stack(&a);
+	return (0);
 }
