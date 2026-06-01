@@ -6,7 +6,7 @@
 #    By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/05/29 14:13:21 by khooftma          #+#    #+#              #
-#    Updated: 2026/05/29 15:20:26 by khooftma         ###   ########.fr        #
+#    Updated: 2026/06/01 16:57:21 by khooftma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ CFLAGS  = -Wall -Wextra -Werror
 
 SRC     = push.c rotate.c rrotate.c complex.c simple.c sort_three.c \
           split.c stack_init.c swap.c utils.c errors.c \
-          disorder.c main.c medium.c utils_main.c optimizer.c
+          adaptive.c main.c medium.c utils_stack_init.c optimizer.c \
+		  utils_simple.c
           
 OBJS    = $(SRC:.c=.o)
 

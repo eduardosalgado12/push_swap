@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/22 15:45:10 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/27 16:10:06 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/01 14:51:58 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	sort_three(t_stack **a)
 
 	if (!a || !*a || !(*a)->next || !(*a)->next->next)
 		return ;
+	if (ft_lstsize(*a) == 2)
+		sa(a);
 	first = (*a)->value;
 	second = (*a)->next->value;
 	third = (*a)->next->next->value;

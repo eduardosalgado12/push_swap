@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 17:35:38 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/27 16:09:08 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/01 14:44:38 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,27 @@ void	free_errors(t_stack **a)
 	free_stack(a);
 	printf("Error\n");
 	exit(1);
+}
+
+long	ft_atol(const char *nptr)
+{
+	int		sign;
+	long	res;
+
+	sign = 1;
+	res = 0;
+	while (*nptr == ' ' || ((*nptr >= 9) && (*nptr <= 13)))
+		nptr++;
+	if (*nptr == '-' || *nptr == '+')
+	{
+		if (*nptr == '-')
+			sign *= -1;
+		nptr++;
+	}
+	while (*nptr >= '0' && *nptr <= '9')
+	{
+		res = (res * 10) + (*nptr - '0');
+		nptr++;
+	}
+	return (res * sign);
 }

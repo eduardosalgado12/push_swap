@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 16:05:35 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/05/29 11:02:16 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/01 16:55:14 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,6 @@ bool	stack_sorted(t_stack *a)
 		if (a->value > a->next->value)
 			return (false);
 		a = a->next;
-	}
-	return (true);
-}
-
-bool	stack_sorted_range(t_stack *a, int size)
-{
-	if (!a || size <= 1)
-		return (true);
-	// Loop door totdat de size op is EN er een volgende node is
-	while (size > 1 && a->next)
-	{
-		if (a->value > a->next->value)
-			return (false);
-		a = a->next;
-		size--; // Telkens eentje aftrekken van het bereik
 	}
 	return (true);
 }
@@ -82,4 +67,33 @@ void	assign_indices(t_stack *stack)
 		}
 		stack = stack->next;
 	}
+}
+
+double	disorder_metric(t_stack *a)
+{
+	long	mistakes;
+	long	total_pairs;
+	t_stack	*i;
+	t_stack	*j;
+
+	mistakes = 0;
+	total_pairs = 0;
+	if (!a || !a->next)
+		return (0.0);
+	i = a;
+	while (i != NULL)
+	{
+		j = i->next;
+		while (j != NULL)
+		{
+			total_pairs++;
+			if (i->value > j->value)
+				mistakes++;
+			j = j->next;
+		}
+		i = i->next;
+	}
+	if (total_pairs == 0)
+		return (0.0);
+	return ((double)mistakes / (double)total_pairs);
 }

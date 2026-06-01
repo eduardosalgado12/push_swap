@@ -6,21 +6,19 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 11:57:19 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/27 16:19:18 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/01 14:47:56 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-size_t	ft_strlen(const char *s)
+static size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
 	i = 0;
-	while (s[i] != '\0')
-	{
+	while (s[i])
 		i++;
-	}
 	return (i);
 }
 
@@ -54,7 +52,7 @@ static char	**ft_free(char **res, int i)
 	return (NULL);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+static char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*str;
 	size_t	i;
@@ -63,9 +61,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (!s)
 		return (NULL);
 	s_len = ft_strlen(s);
-	// if (start >= s_len)
-	// 	return (ft_strdup(""));
-	if (len > s_len - start)
+	if (start >= s_len)
+		len = 0;
+	else if (len > s_len - start)
 		len = s_len - start;
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str)
@@ -91,7 +89,8 @@ char	**ft_split(char const *s, char c)
 	if (!res)
 		return (NULL);
 	i = 0;
-	j = 1;
+
+	j = 0;
 	while (s[i])
 	{
 		while (s[i] && s[i] == c)

@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 12:01:41 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/05/29 12:55:14 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/01 16:50:12 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,33 @@
 void	quick_sort_a(t_stack **a, t_stack **b, int size);
 void	quick_sort_b(t_stack **a, t_stack **b, int size);
 
-static int	is_sorted_b_range(t_stack *b, int size)
+static int	is_sorted__range(t_stack *a, int size)
 {
-	if (!b || size <= 1)
+	if (!a || size <= 1)
 		return (1);
-	while (size > 1 && b->next)
+	while (size > 1 && a->next)
 	{
-		if (b->index < b->next->index)
+		if (a->index < a->next->index)
 			return (0);
-		b = b->next;
+		a = a->next;
 		size--;
 	}
 	return (1);
+}
+
+bool	stack_sorted_range(t_stack *a, int size)
+{
+	if (!a || size <= 1)
+		return (true);
+	// Loop door totdat de size op is EN er een volgende node is
+	while (size > 1 && a->next)
+	{
+		if (a->value > a->next->value)
+			return (false);
+		a = a->next;
+		size--; // Telkens eentje aftrekken van het bereik
+	}
+	return (true);
 }
 
 static int	get_median(t_stack *stack, int size)
@@ -93,7 +108,7 @@ void	quick_sort_a(t_stack **a, t_stack **b, int size)
 	int	rotated;
 	int	i;
 
-	if (size <= 1 || stack_sorted_range(*a, size))
+	if (size <= 1 || is_sorted__range(*a, size))
 		return ;
 	if (size <= 3)
 	{
@@ -118,15 +133,11 @@ void	quick_sort_a(t_stack **a, t_stack **b, int size)
 		}
 		i++;
 	}
-	// THE BENCHMARK WINNER FOR A: Sla het terugdraaien over bij de hoofd-lus!
 	if (ft_lstsize(*a) != rotated)
 	{
 		i = 0;
-		while (i < rotated)
-		{
+		while (i++ < rotated)
 			rra(a);
-			i++;
-		}
 	}
 	quick_sort_a(a, b, size - pushed);
 	quick_sort_b(a, b, pushed);
@@ -139,7 +150,7 @@ void	quick_sort_b(t_stack **a, t_stack **b, int size)
 	int	rotated;
 	int	i;
 
-	if (size <= 0 || !*b || is_sorted_b_range(*b, size))
+	if (size <= 0 || !*b || is_sorted__range(*b, size))
 	{
 		i = 0;
 		while (i++ < size)
@@ -165,15 +176,11 @@ void	quick_sort_b(t_stack **a, t_stack **b, int size)
 		i++;
 	}
 	quick_sort_a(a, b, pushed);
-	// SLIM HERSTEL VOOR B: Draai alleen terug als er al data onder ligt
 	if (ft_lstsize(*b) != rotated)
 	{
 		i = 0;
-		while (i < rotated)
-		{
+		while (i++ < rotated)
 			rrb(b);
-			i++;
-		}
 	}
 	quick_sort_b(a, b, size - pushed);
 }

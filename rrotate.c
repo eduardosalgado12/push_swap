@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 16:19:57 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/29 15:24:20 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/01 16:16:21 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,18 @@ void	reverse_rotate(t_stack **stack)
 void	rra(t_stack **a)
 {
 	reverse_rotate(a);
-	write_op("rra");
+	write(1, "rra\n", 4);
 }
 
 void	rrb(t_stack **b)
 {
 	reverse_rotate(b);
-	write_op("rrb");
+	write(1, "rrb\n", 4);
 }
 
 void	rrr(t_stack **a, t_stack **b)
 {
 	reverse_rotate(a);
 	reverse_rotate(b);
-	write_op("rrr");
+	write(1, "rrr\n", 4);
 }

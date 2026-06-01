@@ -6,31 +6,11 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:08:10 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/28 14:05:30 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/01 16:11:06 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-// void	assign_indices(t_stack *stack)
-// {
-// 	t_stack	*compare;
-// 	t_stack	*start;
-
-// 	start = stack;
-// 	while (stack)
-// 	{
-// 		stack->index = 0;
-// 		compare = start;
-// 		while (compare)
-// 		{
-// 			if (compare->value < stack->value)
-// 				stack->index++;
-// 			compare = compare->next;
-// 		}
-// 		stack = stack->next;
-// 	}
-// }
 
 static int	get_max_pos(t_stack *stack)
 {
@@ -94,6 +74,19 @@ void	chunk_sort_b(t_stack **stack_a, t_stack **stack_b)
 	}
 }
 
+double chunk_size_factor(t_stack **stack_a)
+{
+	double factor;
+
+	if(ft_lstsize(*stack_a) <= 100)
+		factor = 1.8;
+	else if (ft_lstsize(*stack_a) > 100 && ft_lstsize(*stack_a) <= 300 )
+		factor = 2.0;
+	else if (ft_lstsize(*stack_a) > 300)
+		factor = 2.2;
+	return(factor);
+}
+
 void	chunk_sort(t_stack **stack_a, t_stack **stack_b)
 {
 	int	chunk_size;
@@ -101,9 +94,7 @@ void	chunk_sort(t_stack **stack_a, t_stack **stack_b)
 	int	pos;
 
 	assign_indices(*stack_a);
-	chunk_size = (int)ft_sqrt(ft_lstsize(*stack_a)) * 1.8;
-	if (chunk_size < 1)
-		chunk_size = 1;
+	chunk_size = (int)ft_sqrt(ft_lstsize(*stack_a))*chunk_size_factor(stack_a);
 	max_val = chunk_size;
 	while (*stack_a)
 	{
@@ -123,3 +114,4 @@ void	chunk_sort(t_stack **stack_a, t_stack **stack_b)
 	}
 	chunk_sort_b(stack_a, stack_b);
 }
+

@@ -6,36 +6,13 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 17:20:28 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/29 14:45:44 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/01 15:07:04 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-long	ft_atol(const char *nptr)
-{
-	int		sign;
-	long	res;
-
-	sign = 1;
-	res = 0;
-	while (*nptr == ' ' || ((*nptr >= 9) && (*nptr <= 13)))
-		nptr++;
-	if (*nptr == '-' || *nptr == '+')
-	{
-		if (*nptr == '-')
-			sign *= -1;
-		nptr++;
-	}
-	while (*nptr >= '0' && *nptr <= '9')
-	{
-		res = (res * 10) + (*nptr - '0');
-		nptr++;
-	}
-	return (res * sign);
-}
-
-t_stack	*find_last(t_stack *stack)
+static t_stack	*find_last(t_stack *stack)
 {
 	if (!stack)
 		return (NULL);
@@ -44,7 +21,7 @@ t_stack	*find_last(t_stack *stack)
 	return (stack);
 }
 
-void	append_node(t_stack **stack, int n)
+static void	append_node(t_stack **stack, int n)
 {
 	t_stack	*new_node;
 	t_stack	*last_node;
@@ -65,12 +42,12 @@ void	append_node(t_stack **stack, int n)
 	}
 }
 
-void	stack_init(t_stack **a, char **argv, int start_index)
+void	stack_fill(t_stack **a, char **argv, int start_index)
 {
 	long	n;
 	int		i;
 
-	i = start_index; // Gebruik de flexibele start_index in plaats van 1
+	i = start_index;
 	while (argv[i])
 	{
 		if (errors_syntax(argv[i]))
@@ -85,3 +62,44 @@ void	stack_init(t_stack **a, char **argv, int start_index)
 	}
 }
 
+int	get_strategy(char *arg, t_strategy *strat)
+{
+	if (ft_strcmp(arg, "--simple") == 0)
+		return (*strat = STRAT_SIMPLE, 1);
+	if (ft_strcmp(arg, "--medium") == 0)
+		return (*strat = STRAT_MEDIUM, 1);
+	if (ft_strcmp(arg, "--complex") == 0)
+		return (*strat = STRAT_COMPLEX, 1);
+	if (ft_strcmp(arg, "--adaptive") == 0)
+		return (*strat = STRAT_ADAPTIVE, 1);
+	return (0);
+}
+
+int	stack_init(int argc, char **argv, t_stack **a, t_strategy *strat)
+{
+	int args_start;
+	char **split_argv;
+
+	*strat = STRAT_ADAPTIVE;
+	args_start = 1;
+	if (argc < 2 || (argc == 2 && !argv))
+		return (0);
+
+	if (get_strategy(argv[1], strat))
+	{
+		args_start = 2;
+		if (argc == 2 || (argc == 3 && !argv))
+			return (0);
+	}
+	if ((args_start == 1 && argc == 2) || (args_start == 2 && argc == 3))
+	{
+		split_argv = ft_split(argv[args_start], ' ');
+		if (!split_argv)
+			return (0);
+		stack_fill(a, split_argv, 0);
+		free_matrix(split_argv);
+	}
+	else
+		stack_fill(a, argv, args_start);
+	return (1);
+}
