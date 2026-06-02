@@ -1,63 +1,68 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate.c                                           :+:      :+:    :+:   */
+/*   rrotate.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/22 10:36:18 by khooftma          #+#    #+#             */
-/*   Updated: 2026/06/02 11:35:08 by edsalgad         ###   ########.fr       */
+/*   Created: 2026/05/27 16:19:57 by khooftma          #+#    #+#             */
+/*   Updated: 2026/06/02 11:35:58 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	rotate(t_stack **stack)
+void	reverse_rotate(t_stack **stack)
 {
 	t_stack	*first;
 	t_stack	*last;
+	t_stack	*before_last;
 
 	if (!stack || !*stack || !(*stack)->next)
 		return ;
 	first = *stack;
 	last = *stack;
+	before_last = NULL;
 	while (last->next)
+	{
+		before_last = last;
 		last = last->next;
-	*stack = first->next;
+	}
+	before_last->next = NULL;
 	last->next = first;
-	first->next = NULL;
+	*stack = last;
 }
 
-void	ra(t_stack **a, t_bench *bench)
+void	rra(t_stack **a, t_bench *bench)
 {
-	rotate(a);
-	write(1, "ra\n", 3);
+	reverse_rotate(a);
+	write(1, "rra\n", 4);
 	if (bench && bench->active)
 	{
-		bench->ra++;
+		bench->rra++;
 		bench->total_ops++;
 	}
 }
 
-void	rb(t_stack **b, t_bench *bench)
+void	rrb(t_stack **b, t_bench *bench)
 {
-	rotate(b);
-	write(1, "rb\n", 3);
+	reverse_rotate(b);
+	write(1, "rrb\n", 4);
 	if (bench && bench->active)
 	{
-		bench->rb++;
+		bench->rrb++;
 		bench->total_ops++;
 	}
 }
 
-void	rr(t_stack **a, t_stack **b, t_bench *bench)
+void	rrr(t_stack **a, t_stack **b, t_bench *bench)
 {
-	rotate(a);
-	rotate(b);
-	write(1, "rr\n", 3);
+	reverse_rotate(a);
+	reverse_rotate(b);
+	write(1, "rrr\n", 4);
 	if (bench && bench->active)
 	{
-		bench->rr++;
+		bench->rrr++;
 		bench->total_ops++;
 	}
 }

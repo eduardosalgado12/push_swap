@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   swap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khooftma <khooftma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 14:46:26 by khooftma          #+#    #+#             */
-/*   Updated: 2026/05/25 15:43:25 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/02 11:36:57 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,43 @@ void	swap(t_stack **stack)
 
 	if (!stack || !*stack || !(*stack)->next)
 		return ;
-
 	first = *stack;
 	second = first->next;
-	
 	first->next = second->next;
 	second->next = first;
 	*stack = second;
 }
 
-void	sa(t_stack **a)
+void	sa(t_stack **a, t_bench *bench)
 {
 	swap(a);
 	write(1, "sa\n", 3);
+	if (bench && bench->active)
+	{
+		bench->sa++;
+		bench->total_ops++;
+	}
 }
 
-void	sb(t_stack **b)
+void	sb(t_stack **b, t_bench *bench)
 {
 	swap(b);
-	write(1, "sa\n", 3);
+	write(1, "sb\n", 3);
+	if (bench && bench->active)
+	{
+		bench->ra++;
+		bench->total_ops++;
+	}
 }
 
-void	ss(t_stack **a, t_stack **b)
+void	ss(t_stack **a, t_stack **b, t_bench *bench)
 {
 	swap(a);
 	swap(b);
 	write(1, "ss\n", 3);
+	if (bench && bench->active)
+	{
+		bench->ss++;
+		bench->total_ops++;
+	}
 }
