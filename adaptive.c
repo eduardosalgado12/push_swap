@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   disorder.c                                         :+:      :+:    :+:   */
+/*   adaptive.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/22 16:57:22 by khooftma          #+#    #+#             */
-/*   Updated: 2026/06/01 16:55:05 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/03 18:59:30 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void    adaptive_sort(t_stack **a, t_stack **b, double disorder)
+void	adaptive_sort(t_stack **a, t_stack **b, double disorder, t_bench *bench)
 {
-    int     size;
-
-    size = ft_lstsize(*a);
-    if (disorder < 0.2)
-        selection_sort(a, b);
-    else if (disorder >= 0.2 && disorder < 0.5)
-        chunk_sort(a, b);
-    else
-        quick_sort_a(a, b, size);
+	if (disorder < 0.2)
+		selection_sort(a, b, bench);
+	else if (disorder >= 0.2 && disorder < 0.5)
+		chunk_sort(a, b, bench);
+	else
+		quick_sort_a(a, b, ft_lstsize(*a), bench);
 }

@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 16:05:35 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/06/01 16:55:14 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/03 12:14:14 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	ft_sqrt(int number)
 	while (i * i <= number)
 		i++;
 	return (i - 1);
-
 }
 
 void	assign_indices(t_stack *stack)

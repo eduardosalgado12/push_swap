@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/22 10:36:18 by khooftma          #+#    #+#             */
-/*   Updated: 2026/06/01 16:16:16 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/03 18:55:41 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,36 @@ void	rotate(t_stack **stack)
 	first->next = NULL;
 }
 
-void	ra(t_stack **a)
+void	ra(t_stack **a, t_bench *bench)
 {
 	rotate(a);
 	write(1, "ra\n", 3);
+	if (bench && bench->active)
+	{
+		bench->ra++;
+		bench->total_ops++;
+	}
 }
 
-void	rb(t_stack **b)
+void	rb(t_stack **b, t_bench *bench)
 {
 	rotate(b);
 	write(1, "rb\n", 3);
+	if (bench && bench->active)
+	{
+		bench->rb++;
+		bench->total_ops++;
+	}
 }
 
-void	rr(t_stack **a, t_stack **b)
+void	rr(t_stack **a, t_stack **b, t_bench *bench)
 {
 	rotate(a);
 	rotate(b);
 	write(1, "rr\n", 3);
+	if (bench && bench->active)
+	{
+		bench->rr++;
+		bench->total_ops++;
+	}
 }

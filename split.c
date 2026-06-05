@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 11:57:19 by khooftma          #+#    #+#             */
-/*   Updated: 2026/06/01 14:47:56 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/03 18:57:18 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ char	**ft_split(char const *s, char c)
 	if (!res)
 		return (NULL);
 	i = 0;
-
 	j = 0;
 	while (s[i])
 	{

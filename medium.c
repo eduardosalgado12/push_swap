@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:08:10 by khooftma          #+#    #+#             */
-/*   Updated: 2026/06/01 16:11:06 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/05 15:24:50 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	get_chunk_pos(t_stack *stack, int max_val)
 	return (-1);
 }
 
-void	chunk_sort_b(t_stack **stack_a, t_stack **stack_b)
+void	chunk_sort_b(t_stack **stack_a, t_stack **stack_b, t_bench *bench)
 {
 	int	pos;
 
@@ -66,35 +66,35 @@ void	chunk_sort_b(t_stack **stack_a, t_stack **stack_b)
 			break ;
 		if (pos <= ft_lstsize(*stack_b) / 2)
 			while (pos-- > 0)
-				rb(stack_b);
+				rb(stack_b, bench);
 		else
 			while (pos++ < ft_lstsize(*stack_b))
-				rrb(stack_b);
-		pa(stack_a, stack_b);
+				rrb(stack_b, bench);
+		pa(stack_a, stack_b, bench);
 	}
 }
 
-double chunk_size_factor(t_stack **stack_a)
+double	chunk_size_factor(t_stack **stack_a)
 {
-	double factor;
+	double	factor;
 
-	if(ft_lstsize(*stack_a) <= 100)
+	if (ft_lstsize(*stack_a) <= 100)
 		factor = 1.8;
-	else if (ft_lstsize(*stack_a) > 100 && ft_lstsize(*stack_a) <= 300 )
+	else if (ft_lstsize(*stack_a) > 100 && ft_lstsize(*stack_a) <= 300)
 		factor = 2.0;
 	else if (ft_lstsize(*stack_a) > 300)
 		factor = 2.2;
-	return(factor);
+	return (factor);
 }
 
-void	chunk_sort(t_stack **stack_a, t_stack **stack_b)
+void	chunk_sort(t_stack **stack_a, t_stack **stack_b, t_bench *bench)
 {
 	int	chunk_size;
 	int	max_val;
 	int	pos;
 
-	assign_indices(*stack_a);
-	chunk_size = (int)ft_sqrt(ft_lstsize(*stack_a))*chunk_size_factor(stack_a);
+	chunk_size = (int)ft_sqrt(ft_lstsize(*stack_a))
+		* chunk_size_factor(stack_a);
 	max_val = chunk_size;
 	while (*stack_a)
 	{
@@ -105,13 +105,12 @@ void	chunk_sort(t_stack **stack_a, t_stack **stack_b)
 		{
 			if (pos <= ft_lstsize(*stack_a) / 2)
 				while (pos-- > 0)
-					ra(stack_a);
+					ra(stack_a, bench);
 			else
 				while (pos++ < ft_lstsize(*stack_a))
-					rra(stack_a);
-			pb(stack_a, stack_b);
+					rra(stack_a, bench);
+			pb(stack_a, stack_b, bench);
 		}
 	}
-	chunk_sort_b(stack_a, stack_b);
+	chunk_sort_b(stack_a, stack_b, bench);
 }
-

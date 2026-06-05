@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 15:52:46 by khooftma          #+#    #+#             */
-/*   Updated: 2026/06/01 16:14:57 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/03 18:55:10 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,24 @@ void	push(t_stack **dst, t_stack **src)
 	*dst = to_push;
 }
 
-void	pa(t_stack **a, t_stack **b)
+void	pa(t_stack **a, t_stack **b, t_bench *bench)
 {
 	push(a, b);
 	write (1, "pa\n", 3);
+	if (bench && bench->active)
+	{
+		bench->pa++;
+		bench->total_ops++;
+	}
 }
 
-void	pb(t_stack **a, t_stack **b)
+void	pb(t_stack **a, t_stack **b, t_bench *bench)
 {
 	push(b, a);
 	write (1, "pb\n", 3);
+	if (bench && bench->active)
+	{
+		bench->pb++;
+		bench->total_ops++;
+	}
 }

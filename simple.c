@@ -6,13 +6,13 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:24:23 by khooftma          #+#    #+#             */
-/*   Updated: 2026/06/01 15:30:24 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/05 16:06:29 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	pull_max_to_a(t_stack **stack_a, t_stack **stack_b)
+void	pull_max_to_a(t_stack **stack_a, t_stack **stack_b, t_bench *bench)
 {
 	t_stack	*tmp;
 	int		max_idx;
@@ -27,7 +27,7 @@ void	pull_max_to_a(t_stack **stack_a, t_stack **stack_b)
 		tmp = *stack_b;
 		while (tmp)
 		{
-			if (tmp->index >= max_idx)
+			if (tmp->index > max_idx)
 			{
 				max_idx = tmp->index;
 				max_pos = curr;
@@ -35,11 +35,11 @@ void	pull_max_to_a(t_stack **stack_a, t_stack **stack_b)
 			tmp = tmp->next;
 			curr++;
 		}
-		rotate_and_push_b(stack_a, stack_b, max_pos);
+		rotate_and_push_b(stack_a, stack_b, max_pos, bench);
 	}
 }
 
-void	selection_sort(t_stack **stack_a, t_stack **stack_b)
+void	selection_sort(t_stack **stack_a, t_stack **stack_b, t_bench *bench)
 {
 	int	tot;
 	int	chunks;
@@ -58,11 +58,11 @@ void	selection_sort(t_stack **stack_a, t_stack **stack_b)
 			pos = get_closest_in_range(*stack_a, (tot / chunks) * i);
 			if (pos == -1)
 				break ;
-			rotate_and_push_a(stack_a, stack_b, pos);
+			rotate_and_push_a(stack_a, stack_b, pos, bench);
 		}
 	}
 	while (ft_lstsize(*stack_a) > 3)
-		push_min_to_b(stack_a, stack_b);
-	sort_three(stack_a);
-	pull_max_to_a(stack_a, stack_b);
+		push_min_to_b(stack_a, stack_b, bench);
+	sort_two_or_three(stack_a, bench);
+	pull_max_to_a(stack_a, stack_b, bench);
 }

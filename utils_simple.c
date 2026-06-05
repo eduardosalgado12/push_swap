@@ -6,45 +6,41 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:24:05 by khooftma          #+#    #+#             */
-/*   Updated: 2026/06/01 15:25:10 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/03 15:41:20 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	push_min_to_b(t_stack **stack_a, t_stack **stack_b)
+int	get_closest_in_range(t_stack *stack, int limit)
 {
-	int	pos;
-	int	size;
+	int	i;
 
-	pos = get_min_pos_local(*stack_a);
-	size = ft_lstsize(*stack_a);
-	if (pos <= size / 2)
+	i = 0;
+	while (stack)
 	{
-		while (pos-- > 0)
-			ra(stack_a);
+		if (stack->index < limit)
+			return (i);
+		stack = stack->next;
+		i++;
 	}
-	else
-	{
-		while (pos++ < size)
-			rra(stack_a);
-	}
-	pb(stack_a, stack_b);
+	return (-1);
 }
 
-void	rotate_and_push_a(t_stack **stack_a, t_stack **stack_b, int pos)
+void	rotate_and_push_a(t_stack **stack_a, t_stack **stack_b, int pos,
+	t_bench *bench)
 {
 	if (pos <= ft_lstsize(*stack_a) / 2)
 	{
 		while (pos-- > 0)
-			ra(stack_a);
+			ra(stack_a, bench);
 	}
 	else
 	{
 		while (pos++ < ft_lstsize(*stack_a))
-			rra(stack_a);
+			rra(stack_a, bench);
 	}
-	pb(stack_a, stack_b);
+	pb(stack_a, stack_b, bench);
 }
 
 int	get_min_pos_local(t_stack *stack)
@@ -71,22 +67,28 @@ int	get_min_pos_local(t_stack *stack)
 	return (min_pos);
 }
 
-int	get_closest_in_range(t_stack *stack, int limit)
+void	push_min_to_b(t_stack **stack_a, t_stack **stack_b, t_bench *bench)
 {
-	int	i;
+	int	pos;
+	int	size;
 
-	i = 0;
-	while (stack)
+	pos = get_min_pos_local(*stack_a);
+	size = ft_lstsize(*stack_a);
+	if (pos <= size / 2)
 	{
-		if (stack->index < limit)
-			return (i);
-		stack = stack->next;
-		i++;
+		while (pos-- > 0)
+			ra(stack_a, bench);
 	}
-	return (-1);
+	else
+	{
+		while (pos++ < size)
+			rra(stack_a, bench);
+	}
+	pb(stack_a, stack_b, bench);
 }
 
-void	rotate_and_push_b(t_stack **stack_a, t_stack **stack_b, int max_pos)
+void	rotate_and_push_b(t_stack **stack_a, t_stack **stack_b, int max_pos,
+	t_bench *bench)
 {
 	int	size;
 
@@ -94,12 +96,12 @@ void	rotate_and_push_b(t_stack **stack_a, t_stack **stack_b, int max_pos)
 	if (max_pos <= size / 2)
 	{
 		while (max_pos-- > 0)
-			rb(stack_b);
+			rb(stack_b, bench);
 	}
 	else
 	{
 		while (max_pos++ < size)
-			rrb(stack_b);
+			rrb(stack_b, bench);
 	}
-	pa(stack_a, stack_b);
+	pa(stack_a, stack_b, bench);
 }

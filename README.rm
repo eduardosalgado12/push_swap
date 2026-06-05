@@ -1,0 +1,109 @@
+# Push_swap
+
+*This project has been created as part of the 42 curriculum by edsalgad and khooftma.*
+
+---
+
+## Description
+
+**Push_swap** is an algorithmic performance project within the 42 curriculum. The core objective is to sort a chaotic stack of integers in ascending order using two stacks (`A` and `B`) and a strictly constrained set of stack manipulation operations (swaps, pushes, and rotations). 
+
+The ultimate goal is to achieve a perfect sort using the absolute lowest number of instructions possible. This implementation achieves that through an **Adaptive Sorting Engine** that automatically evaluates data topology and inversion density to dynamically provision the most efficient algorithmic strategy.
+
+---
+
+## ⚙️ Instructions
+
+### Compilation
+The project includes a strict, Norminette-compliant `Makefile` to handle compilation. It is designed to compile cleanly without relinking.
+
+```bash
+# Compile the main push_swap executable
+make
+
+# Remove all binary object files (.o)
+make clean
+
+# Remove all object files as well as the compiled binary
+make fclean
+
+# Recompile the entire project from scratch
+make re
+```
+
+### Execution & Usage
+Run the binary executable by passing a shuffled sequence of integers as arguments. The program seamlessly supports both independent arguments and single quoted string literals split by spaces.
+
+```bash
+# Standard execution with loose arguments
+./push_swap 2 1 3 0
+
+# Standard execution with a quoted string literal
+./push_swap "2 1 3 0"
+```
+
+*Note: If no parameters are specified, the program will display nothing and give the terminal prompt back.*
+
+### Error Handling
+In case of invalid inputs, the program securely routes a clean `"Error\n"` message to the **standard error (stderr)** stream. Valid errors caught include:
+* Non-integer inputs (alphabetic characters or formatting errors)
+* Numeric integer values outside the valid `INT_MIN` to `INT_MAX` range (overflow/underflow)
+* Duplicate integer values anywhere within the sequence
+
+---
+
+## Selected Algorithms: Detailed Explanation & Justification
+
+To fulfill the strict project criteria, our binary embeds all four required strategies (simple / medium / complex / adaptive). Strategy selection is fully robust and works seamlessly across all valid inputs, regardless of input size or disorder matrix. 
+
+### 1. Selection Sort with Chunks (`STRAT_SIMPLE` / \(O(n^2)\))
+* **Explanation:** Triggered via the `--simple` flag. It groups numbers into 5 fixed blocks, pushes them to stack `B` based on proximity, and then pulls them back while isolating maximum values.
+* **Justification:** While theoretically an \(O(n^2)\) algorithm due to its nested lookup scanning loops, the 5-chunk partition serves as a constant factor inhibitor that significantly dampens rotation costs for smaller input sequences.
+
+### 2. Chunk Sort (`STRAT_MEDIUM` / \(O(n\sqrt{n})\))
+* **Explanation:** Triggered via the `--medium` flag, this is our core strategy for handling large datasets. It computes a dynamic chunk size based on the square root of the stack size (\(\sqrt{n}\)) combined with an empirical scaler.
+* **Justification:** Scaling the number of chunks with \(\sqrt{n}\) prevents the internal chunk search areas from expanding linearly as the input grows. This guarantees that a valid number always remains near the top of stack `A`, minimizing the total cost of operations (`ra`/`rra`) drastically and safely validating its \(O(n\sqrt{n})\) classification.
+
+### 3. Recursive Quicksort (`STRAT_COMPLEX` / \(O(n \log n)\))
+* **Explanation:** Triggered via the `--complex` flag. A complex "Divide and Conquer" implementation that samples the exact median of a sub-stack via a temporary array, pushes values smaller than the median to `B`, and handles the remaining larger elements in `A`. It then triggers deep dual-recursions.
+* **Justification:** By calculating the exact mathematical median for every split, the recursive call tree depth is strictly held at a logaritmically bounded \(O(\log n)\) scale. This ensures total safety against Stack Overflow memory errors while maintaining a highly reliable, mathematically predictable execution curve.
+
+### 5. Adaptive Strategy (`STRAT_ADAPTIVE`)
+* **Explanation:** This is the default behavior if no selector flag is specified. It runs a pre-sort inversion count formula (`disorder_metric`) to gauge the precise mathematical chaos of the stack, auto-selecting the most optimal strategy from the pipeline.
+
+---
+
+## Advanced Benchmarking Mode
+
+Our project includes an advanced benchmarking feature activated by the `--bench` flag. To comply with the strict project parameters, all benchmark data is output exclusively to `stderr` so it does not interfere with standard automated evaluation checkers.
+
+```bash
+# Run the adaptive engine with the benchmark monitor
+./push_swap --bench 5 1 4 2 3
+
+# Force a specific strategy in benchmark mode
+./push_swap --bench --medium 10 4 2 8 6 1
+```
+
+The benchmark monitor tracks and prints:
+* **The computed disorder** expressed as a percentage with exactly two decimals.
+* **The strategy name** used alongside its valid theoretical complexity class.
+* **The total number of operations** executed.
+* **An itemized operation breakdown** (`sa`, `sb`, `ss`, `pa`, `pb`, `ra`, `rb`, `rr`, `rra`, `rrb`, `rrr`).
+
+---
+
+## Resources & AI Use Description
+
+### References & Documentation
+* **42 Push_swap Subject Documentation**: System limitations, instruction constraints, and boundary validation rules.
+* **Divide and Conquer Paradigms**: Structural design guidelines for median-driven quicksort implementations.
+* **Asymptotic Notation & Time Complexity Studies**: Theoretical foundations explaining the behavior of \(O(n^2)\), \(O(n\sqrt{n})\), and \(O(n \log n)\) tracking curves.
+
+### Description of AI Assistance
+Artificial Intelligence was actively leveraged as a collaborative peer during the code validation, architectural audit, and documentation engineering phases of this project.
+
+* **Code Verification & Architecture Auditing:** AI was used to trace complex nested memory conditions within the recursive `quick_sort_b` loop to confirm that rollback structures (`rrb`) accurately protected lower pre-sorted blocks from corruption.
+* **Educational Refactoring:** AI assisted in analyzing the mathematical constraints of the square-root chunk factor adjustments, helping to map out why scaling chunks dynamically via \(\sqrt{n}\) structurally optimizes the rotation costs compared to static indexing.
+* **Defense Preparation & Explanations:** AI was utilized to draft universal, clear analogies to translate raw pointer logic into high-level conceptual summaries for peer-evaluators.
+

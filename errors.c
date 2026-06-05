@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 17:35:38 by khooftma          #+#    #+#             */
-/*   Updated: 2026/06/01 14:44:38 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/05 15:17:25 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	free_stack(t_stack **stack)
 void	free_errors(t_stack **a)
 {
 	free_stack(a);
+
 	printf("Error\n");
 	exit(1);
 }

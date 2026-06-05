@@ -6,20 +6,11 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 17:20:28 by khooftma          #+#    #+#             */
-/*   Updated: 2026/06/01 15:07:04 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/03 10:40:58 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-static t_stack	*find_last(t_stack *stack)
-{
-	if (!stack)
-		return (NULL);
-	while (stack->next)
-		stack = stack->next;
-	return (stack);
-}
 
 static void	append_node(t_stack **stack, int n)
 {
@@ -62,36 +53,52 @@ void	stack_fill(t_stack **a, char **argv, int start_index)
 	}
 }
 
-int	get_strategy(char *arg, t_strategy *strat)
+int	get_strategy(char *arg, t_bench *bench)
 {
 	if (ft_strcmp(arg, "--simple") == 0)
-		return (*strat = STRAT_SIMPLE, 1);
+		return (bench->strat = STRAT_SIMPLE, 1);
 	if (ft_strcmp(arg, "--medium") == 0)
-		return (*strat = STRAT_MEDIUM, 1);
+		return (bench->strat = STRAT_MEDIUM, 1);
 	if (ft_strcmp(arg, "--complex") == 0)
-		return (*strat = STRAT_COMPLEX, 1);
+		return (bench->strat = STRAT_COMPLEX, 1);
 	if (ft_strcmp(arg, "--adaptive") == 0)
-		return (*strat = STRAT_ADAPTIVE, 1);
+		return (bench->strat = STRAT_ADAPTIVE, 1);
 	return (0);
 }
 
-int	stack_init(int argc, char **argv, t_stack **a, t_strategy *strat)
+static int	parse_flags(int argc, char **argv, t_bench *bench)
 {
-	int args_start;
-	char **split_argv;
+	int	args_start;
 
-	*strat = STRAT_ADAPTIVE;
 	args_start = 1;
-	if (argc < 2 || (argc == 2 && !argv))
-		return (0);
-
-	if (get_strategy(argv[1], strat))
+	while (args_start < argc)
 	{
-		args_start = 2;
-		if (argc == 2 || (argc == 3 && !argv))
-			return (0);
+		if (ft_strcmp(argv[args_start], "--bench") == 0)
+		{
+			bench->active = true;
+			args_start++;
+		}
+		else if (get_strategy(argv[args_start], bench))
+			args_start++;
+		else
+			break ;
 	}
-	if ((args_start == 1 && argc == 2) || (args_start == 2 && argc == 3))
+	return (args_start);
+}
+
+int	stack_init(int argc, char **argv, t_stack **a, t_bench *bench)
+{
+	int		args_start;
+	char	**split_argv;
+
+	bench->strat = STRAT_ADAPTIVE;
+	bench->active = false;
+	if (argc < 2 || (argc == 2 && !argv[1]))
+		return (0);
+	args_start = parse_flags(argc, argv, bench);
+	if (args_start >= argc || (args_start == argc - 1 && !argv[args_start][0]))
+		return (0);
+	if (args_start == argc - 1)
 	{
 		split_argv = ft_split(argv[args_start], ' ');
 		if (!split_argv)

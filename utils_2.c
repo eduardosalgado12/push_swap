@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_main.c                                       :+:      :+:    :+:   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 14:28:59 by khooftma          #+#    #+#             */
-/*   Updated: 2026/06/01 15:02:17 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/03 18:58:20 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,34 @@ void	free_matrix(char **matrix)
 	free(matrix);
 }
 
-// void write_txt(void *void, const char *filename)
-// {
-// 	FILE *file;
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned char	*ptr;
+	size_t			i;
 
-// 	// Open the file in "w" (write) mode. This creates the file or overwrites it if it exists.
-// 	file = fopen(filename, "w");
-	
+	ptr = (unsigned char *)s;
+	i = 0;
+	while (i < n)
+	{
+		ptr[i] = 0;
+		i++;
+	}
+}
 
-	
-// }
+void	ft_swap(int *a, int *b)
+{
+	int	x;
+
+	x = *a;
+	*a = *b;
+	*b = x;
+}
+
+t_stack	*find_last(t_stack *stack)
+{
+	if (!stack)
+		return (NULL);
+	while (stack->next)
+		stack = stack->next;
+	return (stack);
+}
