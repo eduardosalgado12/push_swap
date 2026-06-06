@@ -6,13 +6,13 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 11:57:19 by khooftma          #+#    #+#             */
-/*   Updated: 2026/06/03 18:57:18 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/06 14:48:53 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static size_t	ft_strlen(const char *s)
+static size_t	split_strlen(const char *s)
 {
 	size_t	i;
 
@@ -60,7 +60,7 @@ static char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
-	s_len = ft_strlen(s);
+	s_len = split_strlen(s);
 	if (start >= s_len)
 		len = 0;
 	else if (len > s_len - start)

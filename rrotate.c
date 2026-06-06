@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 16:19:57 by khooftma          #+#    #+#             */
-/*   Updated: 2026/06/03 18:56:09 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/06 15:34:53 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void	reverse_rotate(t_stack **stack)
 void	rra(t_stack **a, t_bench *bench)
 {
 	reverse_rotate(a);
-	write(1, "rra\n", 4);
+	// Print ALTIJD de operatie, BEHALVE als dit de checker is!
+	if (!bench || !bench->is_checker)
+		write(1, "rra\n", 4);
+	// Tel de statistieken ALLEEN op als --bench is meegegeven
 	if (bench && bench->active)
 	{
 		bench->rra++;
@@ -47,7 +50,10 @@ void	rra(t_stack **a, t_bench *bench)
 void	rrb(t_stack **b, t_bench *bench)
 {
 	reverse_rotate(b);
-	write(1, "rrb\n", 4);
+	// Print ALTIJD de operatie, BEHALVE als dit de checker is!
+	if (!bench || !bench->is_checker)
+		write(1, "rrb\n", 4);
+	// Tel de statistieken ALLEEN op als --bench is meegegeven
 	if (bench && bench->active)
 	{
 		bench->rrb++;
@@ -59,10 +65,14 @@ void	rrr(t_stack **a, t_stack **b, t_bench *bench)
 {
 	reverse_rotate(a);
 	reverse_rotate(b);
-	write(1, "rrr\n", 4);
+	// Print ALTIJD de operatie, BEHALVE als dit de checker is!
+	if (!bench || !bench->is_checker)
+		write(1, "rrr\n", 4);
+	// Tel de statistieken ALLEEN op als --bench is meegegeven
 	if (bench && bench->active)
 	{
 		bench->rrr++;
 		bench->total_ops++;
 	}
 }
+

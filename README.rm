@@ -1,7 +1,6 @@
 # Push_swap
 
 *This project has been created as part of the 42 curriculum by edsalgad and khooftma.*
-
 ---
 
 ## Description
@@ -12,27 +11,30 @@ The ultimate goal is to achieve a perfect sort using the absolute lowest number 
 
 ---
 
-## ⚙️ Instructions
+## Instructions
 
 ### Compilation
-The project includes a strict, Norminette-compliant `Makefile` to handle compilation. It is designed to compile cleanly without relinking.
+The project includes a strict, Norminette-compliant `Makefile` to handle compilation. It is designed to compile cleanly without relinking and splits shared source assets beautifully to cleanly isolate the mandatory binary from the bonus binary.
 
 ```bash
 # Compile the main push_swap executable
 make
 
-# Remove all binary object files (.o)
+# Compile the bonus checker executable
+make bonus
+
+# Remove all binary object files (.o) from both targets
 make clean
 
-# Remove all object files as well as the compiled binary
+# Remove all object files as well as both compiled binaries
 make fclean
 
-# Recompile the entire project from scratch
+# Recompile the entire project (including the bonus) from scratch
 make re
 ```
 
 ### Execution & Usage
-Run the binary executable by passing a shuffled sequence of integers as arguments. The program seamlessly supports both independent arguments and single quoted string literals split by spaces.
+Run the binary executable by passing a shuffled sequence of integers as arguments. The program seamlessly supports both independent arguments and single-quoted string literals split by spaces.
 
 ```bash
 # Standard execution with loose arguments
@@ -54,35 +56,32 @@ In case of invalid inputs, the program securely routes a clean `"Error\n"` messa
 
 ## Selected Algorithms: Detailed Explanation & Justification
 
-To fulfill the strict project criteria, our binary embeds all four required strategies (simple / medium / complex / adaptive). Strategy selection is fully robust and works seamlessly across all valid inputs, regardless of input size or disorder matrix. 
+To fulfill the strict project criteria, our binary embeds all four required strategies (simple / medium / complex / adaptive). Strategy selection is fully robust and works seamlessly across all valid inputs, regardless of input size or disorder matrix.
 
-### 1. Selection Sort with Chunks (`STRAT_SIMPLE` / \(O(n^2)\))
+### 1. Selection Sort with Chunks (`STRAT_SIMPLE` / O(n²))
 * **Explanation:** Triggered via the `--simple` flag. It groups numbers into 5 fixed blocks, pushes them to stack `B` based on proximity, and then pulls them back while isolating maximum values.
-* **Justification:** While theoretically an \(O(n^2)\) algorithm due to its nested lookup scanning loops, the 5-chunk partition serves as a constant factor inhibitor that significantly dampens rotation costs for smaller input sequences.
+* **Justification:** While theoretically an O(n²) algorithm due to its nested lookup scanning loops, the 5-chunk partition serves as a constant factor inhibitor that significantly dampens rotation costs for smaller input sequences.
 
-### 2. Chunk Sort (`STRAT_MEDIUM` / \(O(n\sqrt{n})\))
-* **Explanation:** Triggered via the `--medium` flag, this is our core strategy for handling large datasets. It computes a dynamic chunk size based on the square root of the stack size (\(\sqrt{n}\)) combined with an empirical scaler.
-* **Justification:** Scaling the number of chunks with \(\sqrt{n}\) prevents the internal chunk search areas from expanding linearly as the input grows. This guarantees that a valid number always remains near the top of stack `A`, minimizing the total cost of operations (`ra`/`rra`) drastically and safely validating its \(O(n\sqrt{n})\) classification.
+### 2. Chunk Sort (`STRAT_MEDIUM` / O(n√n))
+* **Explanation:** Triggered via the `--medium` flag, this is our core strategy for handling large datasets. It computes a dynamic chunk size based on the square root of the stack size (√n) combined with an empirical scaler.
+* **Justification:** Scaling the number of chunks with √n prevents the internal chunk search areas from expanding linearly as the input grows. This guarantees that a valid number always remains near the top of stack `A`, minimizing the total cost of operations (`ra`/`rra`) drastically and safely validating its O(n√n) classification.
 
-### 3. Recursive Quicksort (`STRAT_COMPLEX` / \(O(n \log n)\))
-* **Explanation:** Triggered via the `--complex` flag. A complex "Divide and Conquer" implementation that samples the exact median of a sub-stack via a temporary array, pushes values smaller than the median to `B`, and handles the remaining larger elements in `A`. It then triggers deep dual-recursions.
-* **Justification:** By calculating the exact mathematical median for every split, the recursive call tree depth is strictly held at a logaritmically bounded \(O(\log n)\) scale. This ensures total safety against Stack Overflow memory errors while maintaining a highly reliable, mathematically predictable execution curve.
+### 3. Recursive Quicksort (`STRAT_COMPLEX` / O(n log n))
+* **Explanation:** Triggered via the `--complex` flag. A sophisticated, highly optimized "Divide and Conquer" implementation split into `complex.c` and `complex_utils.c` to fully satisfy the 42 Norm (holding functions strictly under 25 lines). It samples the exact median of a sub-stack via a temporary stack allocation array, pushes bounded elements to `B`, and handles the remaining larger elements in `A` via deep dual-recursions (`quick_sort_a` / `quick_sort_b`). 
+* **Justification:** By calculating the exact mathematical median for every split, the recursive call tree depth is strictly held at a logarithmically bounded O(log n) scale. Optimization mechanisms, such as rounding targets up via a `(size + 1) / 2` threshold in Stack B, stop partition sweeps early to drastically cut unneeded `rb`/`rrb` cycles. Additionally, subsets of size ≤ 3 are passed to a chirurgic `sort_small_a` shield function that manipulates the top entries using localized rollbacks (`ra` → `sa` → `rra`), dynamically protecting pre-sorted historical elements stacked underneath.
 
-### 5. Adaptive Strategy (`STRAT_ADAPTIVE`)
+### 4. Adaptive Strategy (`STRAT_ADAPTIVE`)
 * **Explanation:** This is the default behavior if no selector flag is specified. It runs a pre-sort inversion count formula (`disorder_metric`) to gauge the precise mathematical chaos of the stack, auto-selecting the most optimal strategy from the pipeline.
 
 ---
 
 ## Advanced Benchmarking Mode
 
-Our project includes an advanced benchmarking feature activated by the `--bench` flag. To comply with the strict project parameters, all benchmark data is output exclusively to `stderr` so it does not interfere with standard automated evaluation checkers.
+Our project includes an advanced benchmarking feature activated exclusively by the `--bench` flag. To comply with the strict project parameters, all benchmark data is output exclusively to `stderr` so it does not interfere with standard automated evaluation checkers or Unix pipes.
 
 ```bash
 # Run the adaptive engine with the benchmark monitor
 ./push_swap --bench 5 1 4 2 3
-
-# Force a specific strategy in benchmark mode
-./push_swap --bench --medium 10 4 2 8 6 1
 ```
 
 The benchmark monitor tracks and prints:
@@ -93,17 +92,59 @@ The benchmark monitor tracks and prints:
 
 ---
 
+## Bonus Part: The `checker` Program
+
+We have engineered a fully independent, robust structural verification program called `checker`. It takes the initial integer stack format as an argument, reads stack manipulation instructions sequentially from standard input (`stdin`) via an optimized `get_next_line` engine, and executes them live on a simulated stack environment.
+
+### Architectural Silence Design
+To safeguard evaluation integrity and strictly adhere to the 42 subject rules, the execution operations share a smart filter design using an `is_checker` boolean flag located inside the `t_bench` structure:
+```c
+if (!bench || !bench->is_checker)
+    write(1, "pa\n", 3);
+```
+When running the bonus `checker`, a tracking `dummy_bench` overrides operations to run them completely muted. This ensures that the checker *never* echoes operations back to standard output, yielding a completely silent operational evaluation pipeline.
+
+### Verification Usage
+To test whether the instructions output by `push_swap` correctly and cleanly sort the data topology, bridge the programs using a standard Unix Pipe (`|`):
+
+```bash
+# Pipeline check (The official evaluation method)
+ARG="4 67 3 87 23"; ./push_swap ARG | ./checker ARG
+
+# Expected output on perfect sort:
+OK
+```
+
+### Interactive Manual Testing
+You can also seed a stack state into the checker and manually input operations row by row to step-debug your stack logic. Press `Ctrl + D` when done to pass the End-Of-File (`EOF`) token to GNL:
+
+```bash
+./checker 3 2 1 0
+sa
+pb
+ra
+[Ctrl + D]
+KO
+```
+
+### Checker Error Controls
+The `checker` matches the error handling parameters of the core project. It catches and securely routes `"Error\n"` to `stderr` under the following conditions:
+* Invalid arguments passed during stack initialization (duplicates, non-ints, overflows).
+* Receiving an unknown or poorly formatted operation sequence via standard input (e.g., `abc\n` or an empty instruction).
+* *Note: Completely empty inputs (pressing Enter instantly or supplying an empty pipe) are safely parsed as valid EOF indicators, resulting in a normal stack evaluation (`OK` or `KO`) rather than an error crash.*
+
+---
+
 ## Resources & AI Use Description
 
 ### References & Documentation
 * **42 Push_swap Subject Documentation**: System limitations, instruction constraints, and boundary validation rules.
 * **Divide and Conquer Paradigms**: Structural design guidelines for median-driven quicksort implementations.
-* **Asymptotic Notation & Time Complexity Studies**: Theoretical foundations explaining the behavior of \(O(n^2)\), \(O(n\sqrt{n})\), and \(O(n \log n)\) tracking curves.
+* **Asymptotic Notation & Time Complexity Studies**: Theoretical foundations explaining the behavior of O(n²), O(n√n), and O(n log n) tracking curves.
 
 ### Description of AI Assistance
-Artificial Intelligence was actively leveraged as a collaborative peer during the code validation, architectural audit, and documentation engineering phases of this project.
+Artificial Intelligence was actively leveraged as a collaborative peer during the code validation, architectural audit, norminette compliance, and documentation engineering phases of this project.
 
-* **Code Verification & Architecture Auditing:** AI was used to trace complex nested memory conditions within the recursive `quick_sort_b` loop to confirm that rollback structures (`rrb`) accurately protected lower pre-sorted blocks from corruption.
-* **Educational Refactoring:** AI assisted in analyzing the mathematical constraints of the square-root chunk factor adjustments, helping to map out why scaling chunks dynamically via \(\sqrt{n}\) structurally optimizes the rotation costs compared to static indexing.
-* **Defense Preparation & Explanations:** AI was utilized to draft universal, clear analogies to translate raw pointer logic into high-level conceptual summaries for peer-evaluators.
-
+* **Code Verification & Architecture Auditing:** AI was used to trace complex nested memory conditions within the recursive loops to confirm that rollback structures (`rrb`/`rra`) safely protected lower pre-sorted blocks from structural corruption.
+* **Norminette Engineering:** AI assisted in refactoring the 6-function layout of the complex algorithm, safely extracting utility loops into an autonomous `complex_utils.c` layout while using comma-operator grouping tricks (`return (f(), (void)0)`) to cleanly compress void function parameters under the tight 25-line structural ceiling.
+* **Defense Preparation & Explanations:** AI was utilized to analyze the streaming pipelines of Unix standard outputs (`stdout` vs `stderr`), verifying how to build a `--bench` toggle structure that guarantees perfect transparency during manual execution while remaining hidden away from automated evaluation parsers.
