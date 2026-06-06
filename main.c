@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 15:26:18 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/06/06 15:37:33 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/06 16:17:35 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,22 @@ int	main(int argc, char **argv)
 	t_bench	bench;
 	t_stack	*a;
 	t_stack	*b;
+	bool	has_bench;
 
 	a = NULL;
 	b = NULL;
+	has_bench = false;
 	ft_bzero(&bench, sizeof(t_bench));
 	if (argc > 1 && ft_strcmp(argv[1], "--bench") == 0)
 	{
-		bench.active = true;
-		argv++; // Sla "-b" over voor de getalleninvoer
-		argc--; // Verminder het aantal argumenten
+		has_bench = true;
+		argv[1] = argv[0];
+		argv++;
+		argc--;
 	}
 	if (!stack_init(argc, argv, &a, &bench) || !a)
 		return (write(2, "Error\n", 6), 1);
+	bench.active = has_bench;
 	if (!stack_sorted(a))
 		execute_sort(&a, &b, &bench);
 	if (bench.active)
