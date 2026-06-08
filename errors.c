@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
+/*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 17:35:38 by khooftma          #+#    #+#             */
-/*   Updated: 2026/06/01 14:44:38 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/05 13:14:54 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	free_stack(t_stack **stack)
 void	free_errors(t_stack **a)
 {
 	free_stack(a);
-	printf("Error\n");
+	write(2, "Error\n", 6);
 	exit(1);
 }
 

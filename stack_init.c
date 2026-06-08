@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 17:20:28 by khooftma          #+#    #+#             */
-/*   Updated: 2026/06/02 13:31:46 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/06/05 13:13:10 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,38 +33,27 @@ static void	append_node(t_stack **stack, int n)
 	}
 }
 
-void	stack_fill(t_stack **a, char **argv, int start_index)
+int	stack_fill(t_stack **a, char **argv)
 {
 	long	n;
 	int		i;
 
-	i = start_index;
+	i = 0;
 	while (argv[i])
 	{
 		if (errors_syntax(argv[i]))
-			free_errors(a);
+			return (0);
 		n = ft_atol(argv[i]);
 		if (n > INT_MAX || n < INT_MIN)
-			free_errors(a);
+			return (0);
 		if (errors_duplicate(*a, (int)n))
-			free_errors(a);
+			return (0);
 		append_node(a, (int)n);
 		i++;
 	}
+	return (1);
 }
 
-int	get_strategy(char *arg, t_bench *bench)
-{
-	if (ft_strcmp(arg, "--simple") == 0)
-		return (bench->strat = STRAT_SIMPLE, 1);
-	if (ft_strcmp(arg, "--medium") == 0)
-		return (bench->strat = STRAT_MEDIUM, 1);
-	if (ft_strcmp(arg, "--complex") == 0)
-		return (bench->strat = STRAT_COMPLEX, 1);
-	if (ft_strcmp(arg, "--adaptive") == 0)
-		return (bench->strat = STRAT_ADAPTIVE, 1);
-	return (0);
-}
 
 static int	parse_flags(int argc, char **argv, t_bench *bench)
 {
@@ -74,17 +63,22 @@ static int	parse_flags(int argc, char **argv, t_bench *bench)
 	while (args_start < argc)
 	{
 		if (ft_strcmp(argv[args_start], "--bench") == 0)
-		{
 			bench->active = true;
-			args_start++;
-		}
-		else if (get_strategy(argv[args_start], bench))
-			args_start++;
+		else if (ft_strcmp(argv[args_start], "--simple") == 0)
+			bench->strat = STRAT_SIMPLE;
+		else if (ft_strcmp(argv[args_start], "--medium") == 0)
+			bench->strat = STRAT_MEDIUM;
+		else if (ft_strcmp(argv[args_start], "--complex") == 0)
+			bench->strat = STRAT_COMPLEX;
+		else if (ft_strcmp(argv[args_start], "--adaptive") == 0)
+			bench->strat = STRAT_ADAPTIVE;
 		else
 			break ;
+		args_start++;
 	}
 	return (args_start);
 }
+
 
 int	stack_init(int argc, char **argv, t_stack **a, t_bench *bench)
 {
@@ -93,20 +87,23 @@ int	stack_init(int argc, char **argv, t_stack **a, t_bench *bench)
 
 	bench->strat = STRAT_ADAPTIVE;
 	bench->active = false;
-	if (argc < 2 || (argc == 2 && !argv[1]))
+	if (argc < 2)
 		return (0);
 	args_start = parse_flags(argc, argv, bench);
-	if (args_start >= argc || (args_start == argc - 1 && !argv[args_start][0]))
+	if (args_start == argc)
 		return (0);
-	if (args_start == argc - 1)
+	while (args_start < argc)
 	{
+		if (argv[args_start][0] == '\0')
+			return (free_stack(a), 0);
 		split_argv = ft_split(argv[args_start], ' ');
 		if (!split_argv)
-			return (0);
-		stack_fill(a, split_argv, 0);
+			return (free_stack(a), 0);
+		if (!stack_fill(a, split_argv))
+			return (free_matrix(split_argv), free_stack(a), 0);
 		free_matrix(split_argv);
+		args_start++;
 	}
-	else
-		stack_fill(a, argv, args_start);
 	return (1);
 }
+
