@@ -3,22 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 16:05:35 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/05/20 16:07:52 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/06/03 12:14:14 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-
 int	ft_lstsize(t_stack *lst)
 {
 	int	c;
 
-    // if (NULL == stack)
-	// return (0);
 	c = 0;
 	while (lst)
 	{
@@ -26,4 +23,76 @@ int	ft_lstsize(t_stack *lst)
 		lst = lst->next;
 	}
 	return (c);
+}
+
+bool	stack_sorted(t_stack *a)
+{
+	if (!a)
+		return (true);
+	while (a->next)
+	{
+		if (a->value > a->next->value)
+			return (false);
+		a = a->next;
+	}
+	return (true);
+}
+
+int	ft_sqrt(int number)
+{
+	int	i;
+
+	i = 1;
+	while (i * i <= number)
+		i++;
+	return (i - 1);
+}
+
+void	assign_indices(t_stack *stack)
+{
+	t_stack	*compare;
+	t_stack	*start;
+
+	start = stack;
+	while (stack)
+	{
+		stack->index = 0;
+		compare = start;
+		while (compare)
+		{
+			if (compare->value < stack->value)
+				stack->index++;
+			compare = compare->next;
+		}
+		stack = stack->next;
+	}
+}
+
+double	disorder_metric(t_stack *a)
+{
+	long	mistakes;
+	long	total_pairs;
+	t_stack	*i;
+	t_stack	*j;
+
+	mistakes = 0;
+	total_pairs = 0;
+	if (!a || !a->next)
+		return (0.0);
+	i = a;
+	while (i != NULL)
+	{
+		j = i->next;
+		while (j != NULL)
+		{
+			total_pairs++;
+			if (i->value > j->value)
+				mistakes++;
+			j = j->next;
+		}
+		i = i->next;
+	}
+	if (total_pairs == 0)
+		return (0.0);
+	return ((double)mistakes / (double)total_pairs);
 }
