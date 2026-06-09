@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 15:51:12 by khooftma          #+#    #+#             */
-/*   Updated: 2026/06/06 15:45:19 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/08 13:06:16 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,23 @@ int	get_median(t_stack *stack, int size)
 	return (free(arr), swap);
 }
 
-void	sort_small_a(t_stack **a, t_stack **b, int size, t_bench *bench)
+void	sort_small_a(t_stack **a, int size, t_bench *bench)
 {
-	(void)b;
 	if (size == 2 && (*a)->index > (*a)->next->index)
 		sa(a, bench);
 	else if (size == 3)
 	{
+		/* 		if ((*a)->index > (*a)->next->index
+					&& (*a)->index > (*a)->next->next->index)
+					ra(a, bench);
+				// Se o segundo é o maior de todos
+				else if ((*a)->next->index > (*a)->index
+					&& (*a)->next->index > (*a)->next->next->index)
+					rra(a, bench);
+				// No fim,
+					resta apenas verificar se os dois primeiros estão trocados
+				if ((*a)->index > (*a)->next->index)
+					sa(a, bench); */
 		if ((*a)->index > (*a)->next->index
 			&& (*a)->index > (*a)->next->next->index)
 			sa(a, bench);

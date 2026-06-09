@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 15:52:46 by khooftma          #+#    #+#             */
-/*   Updated: 2026/06/06 15:33:44 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/09 11:28:34 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,7 @@ void	push(t_stack **dst, t_stack **src)
 void	pa(t_stack **a, t_stack **b, t_bench *bench)
 {
 	push(a, b);
-	// Schrijf ALTIJD de operatie, BEHALVE als dit de checker is!
-	if (!bench || !bench->is_checker)
-		write(1, "pa\n", 3);
-	
-	// Tel de statistieken ALLEEN op als de gebruiker --bench heeft meegegeven
+	write(1, "pa\n", 3);
 	if (bench && bench->active)
 	{
 		bench->pa++;
@@ -43,10 +39,7 @@ void	pa(t_stack **a, t_stack **b, t_bench *bench)
 void	pb(t_stack **a, t_stack **b, t_bench *bench)
 {
 	push(b, a);
-	// Print ALTIJD de operatie, BEHALVE als dit de checker is!
-	if (!bench || !bench->is_checker)
-		write(1, "pb\n", 3);
-	// Tel de statistieken ALLEEN op als --bench is meegegeven
+	write(1, "pb\n", 3);
 	if (bench && bench->active)
 	{
 		bench->pb++;

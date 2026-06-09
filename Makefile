@@ -6,7 +6,7 @@
 #    By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/05/29 14:13:21 by khooftma          #+#    #+#              #
-#    Updated: 2026/06/06 15:49:47 by khooftma         ###   ########.fr        #
+#    Updated: 2026/06/09 14:44:13 by khooftma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,12 @@ NAME_BONUS	= checker
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
 
-# main.c is hieronder weggehaald zodat bronbestanden niet dubbel linken!
+PRINTF_DIR  = ft_printf
+PRINTF      = $(PRINTF_DIR)/ft_printf.a
+
 SHARED_SRC	= push.c rotate.c rrotate.c complex.c simple.c sort_three.c \
 				split.c stack_init.c swap.c utils.c errors.c \
-				adaptive.c medium.c utils_2.c  utils_complex.c \
+				adaptive.c medium.c utils_2.c utils_complex.c \
 				utils_simple.c get_next_line.c get_next_line_utils.c \
 
 SRC 		= main.c $(SHARED_SRC)
@@ -29,8 +31,11 @@ OBJS_BONUS	= $(SRC_BONUS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+$(NAME): $(OBJS) $(PRINTF)
+	$(CC) $(CFLAGS) $(OBJS) $(PRINTF) -o $(NAME)
+
+$(PRINTF):
+	make -C $(PRINTF_DIR)
 
 bonus: $(NAME_BONUS)
 
@@ -39,9 +44,11 @@ $(NAME_BONUS): $(OBJS_BONUS)
 
 clean:
 	rm -f $(OBJS) $(OBJS_BONUS)
+	make -C $(PRINTF_DIR) clean
 
 fclean: clean
 	rm -f $(NAME) $(NAME_BONUS)
+	make -C $(PRINTF_DIR) fclean
 
 re: fclean all
 
