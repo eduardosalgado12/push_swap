@@ -1,6 +1,5 @@
-# Push_swap
-
 *This project has been created as part of the 42 curriculum by edsalgad and khooftma.*
+
 ---
 
 ## Description
@@ -44,22 +43,32 @@ Run the binary executable by passing a shuffled sequence of integers as argument
 ./push_swap "2 1 3 0"
 ```
 
-*Note: If no parameters are specified, the program will display nothing and give the terminal prompt back.*
+*Note: If no parameters are specified, the program will display nothing and return the terminal prompt.*
 
 ### Error Handling
 In case of invalid inputs, the program securely routes a clean `"Error\n"` message to the **standard error (stderr)** stream. Valid errors caught include:
-* Non-integer inputs (alphabetic characters or formatting errors)
-* Numeric integer values outside the valid `INT_MIN` to `INT_MAX` range (overflow/underflow)
-* Duplicate integer values anywhere within the sequence
+* Non-integer inputs (alphabetic characters or formatting errors).
+* Numeric values outside the limits of a 32-bit signed integer (`INT_MAX` or `INT_MIN`).
+* Duplicate numbers within the input sequence.
 
 ---
 
+## Algorithmic Structure
+
+The adaptive sorting engine chooses the best strategy based on the quantity of the numbers provided:
+
+### Small Sets (2 to 5 elements)
+* **2 elements:** Executes a simple swap (`sa` ) if the elements are out of order.
+* **3 elements:** Analyzes the three values to apply an exact combination of a maximum of 2 instructions (uses a hardcoded case-mapping sort).
+* **4 to 5 elements:** Pushes the smallest values temporarily to Stack `B`, sorts the remaining values in Stack `A`, and pushes them back into their correct positions.
+
+### Large Sets (More than 5 elements)
 ## Selected Algorithms: Detailed Explanation & Justification
 
 To fulfill the strict project criteria, our binary embeds all four required strategies (simple / medium / complex / adaptive). Strategy selection is fully robust and works seamlessly across all valid inputs, regardless of input size or disorder matrix.
 
 ### 1. Selection Sort with Chunks (`STRAT_SIMPLE` / O(n²))
-* **Explanation:** Triggered via the `--simple` flag. It groups numbers into 5 fixed blocks, pushes them to stack `B` based on proximity, and then pulls them back while isolating maximum values.
+* **Explanation:** Triggered via the `--simple` flag. It groups numbers into 5 fixed blocks (if total size bigger than 25), pushes them to stack `B` based on proximity, and then pulls them back while isolating maximum values.
 * **Justification:** While theoretically an O(n²) algorithm due to its nested lookup scanning loops, the 5-chunk partition serves as a constant factor inhibitor that significantly dampens rotation costs for smaller input sequences.
 
 ### 2. Chunk Sort (`STRAT_MEDIUM` / O(n√n))
@@ -72,6 +81,23 @@ To fulfill the strict project criteria, our binary embeds all four required stra
 
 ### 4. Adaptive Strategy (`STRAT_ADAPTIVE`)
 * **Explanation:** This is the default behavior if no selector flag is specified. It runs a pre-sort inversion count formula (`disorder_metric`) to gauge the precise mathematical chaos of the stack, auto-selecting the most optimal strategy from the pipeline.
+
+---
+
+## Instruction Set
+
+The program outputs a list of the following allowed instructions to manipulate both stacks:
+
+| Command | Human Operation | Detailed Description |
+| :--- | :--- | :--- |
+| **`sa`** / **`sb`** | Swap A / Swap B | Swaps the first 2 elements at the top of the selected stack. |
+| **`ss`** | Swap Both | Executes `sa` and `sb` at the same time. |
+| **`pa`** / **`pb`** | Push A / Push B | Takes the top element from one stack and puts it on top of the other. |
+| **`ra`** / **`rb`** | Rotate A / Rotate B | Shifts all elements of the stack up by 1 position. The top element becomes the bottom one. |
+| **`rr`** | Rotate Both | Executes `ra` and `rb` at the same time. |
+| **`rra`** / **`rrb`** | Reverse Rotate A/B | Shifts all elements of the stack down by 1 position. The bottom element becomes the top one. |
+| **`rrr`** | Rev Rotate Both | Executes `rra` and `rrb` at the same time. |
+
 
 ---
 
@@ -99,7 +125,7 @@ We have engineered a fully independent, robust structural verification program c
 ### Architectural Silence Design
 To safeguard evaluation integrity and strictly adhere to the 42 subject rules, the execution operations share a smart filter design using an `is_checker` boolean flag located inside the `t_bench` structure:
 ```c
-if (!bench || !bench->is_checker)
+if (!bench->is_checker)
     write(1, "pa\n", 3);
 ```
 When running the bonus `checker`, a tracking `dummy_bench` overrides operations to run them completely muted. This ensures that the checker *never* echoes operations back to standard output, yielding a completely silent operational evaluation pipeline.
@@ -132,6 +158,23 @@ The `checker` matches the error handling parameters of the core project. It catc
 * Invalid arguments passed during stack initialization (duplicates, non-ints, overflows).
 * Receiving an unknown or poorly formatted operation sequence via standard input (e.g., `abc\n` or an empty instruction).
 * *Note: Completely empty inputs (pressing Enter instantly or supplying an empty pipe) are safely parsed as valid EOF indicators, resulting in a normal stack evaluation (`OK` or `KO`) rather than an error crash.*
+
+---
+
+## Contributors
+
+This project was co-developed as a collaborative effort within the 42 School network. Both learners contributed equally to core milestones while dividing specific technical responsibilities:
+
+
+* **khooftma**  
+  * **Core Setup & Instructions**: Initialized the foundational workspace infrastructure and programmed the base set of operation instructions (`sa`, `pb`, `ra`, etc.).
+  * **Algorithmic Pipeline**: Authored the implementation for both the **Simple Algorithm** (Selection Sort with Chunks) and the **Medium Algorithm** (Dynamic Chunk Sort).
+  * **Validation & Documentation**: Wrote the structural **README.md** manual and engineered the complete **Checker binary framework** to satisfy the 42 project bonus rules.
+
+* **edsalgad**  
+  * **Advanced Sorting Architecture**: Designed and engineered the highly complex **Recursive Quicksort** logic alongside its multi-file implementation structures.
+  * **Input Engineering & Safety**: Programmed the strict argument **parsing layer** and standard error verification matrix.
+  * **Optimization & Verification**: Led systemic **debugging loops**, built the project **benchmarking module** (`t_bench`), and executed **all deep end-to-end stress tests** to minimize operation costs.
 
 ---
 
