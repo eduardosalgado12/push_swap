@@ -6,7 +6,7 @@
 /*   By: khooftma <khooftma@://42porto.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 15:58:12 by khooftma          #+#    #+#             */
-/*   Updated: 2026/06/08 17:04:18 by khooftma         ###   ########.fr       */
+/*   Updated: 2026/06/10 10:59:17 by khooftma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	main(int argc, char **argv)
 	ft_bzero(&dummy_bench, sizeof(t_bench));
 	dummy_bench.is_checker = true;
 	if (!stack_init(argc, argv, &a, &dummy_bench) || !a)
-		return (1);
+		return (free_stack(&a), write(2, "Error\n", 6), 1);
 	if (!read_and_execute(&a, &b, &dummy_bench))
 		return (free_stack(&a), free_stack(&b), write(2, "Error\n", 6), 1);
 	if (stack_sorted(a) && !b)
